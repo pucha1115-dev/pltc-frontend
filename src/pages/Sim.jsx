@@ -57,44 +57,51 @@ const Sim = () => {
                   label="ICCID"
                   name="iccid"
                   value={iccid}
-                  placeholder="4230123414201235"
+                  placeholder=""
                   onChange={(e) => setIccid(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
                   label="MIN/HP"
                   name="min_hp"
                   value={min_hp}
-                  placeholder="9600507865"
+                  placeholder=""
                   onChange={(e) => setMinHp(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
                   label="IP Address"
                   name="apn"
-                  type="password"
-                  value={password}
-                  placeholder="password"
-                  onChange={(e) => setPasswrod(e.target.value)}
+                  type="text"
+                  value={ip}
+                  placeholder=""
+                  onChange={(e) => setIp(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
                   label="Carrier"
                   name="carrier"
                   value={carrier}
-                  placeholder="SMART/GLOBE"
+                  placeholder=""
                   onChange={(e) => setCarrier(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
                   label="APN"
                   name="apn"
                   value={apn}
-                  placeholder="apn.smart.com.ph"
+                  placeholder=""
                   onChange={(e) => setApn(e.target.value)}
+                ></FormInputFieldSide>
+                <FormInputFieldSide
+                  label="Username"
+                  name="username"
+                  value={username}
+                  placeholder=""
+                  onChange={(e) => setUsername(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
                   label="Password"
                   name="apn"
-                  type="password"
+                  type="text"
                   value={password}
-                  placeholder="password"
+                  placeholder=""
                   onChange={(e) => setPasswrod(e.target.value)}
                 ></FormInputFieldSide>
               </Stack>

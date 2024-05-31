@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormInputField from "../components/FormInputField";
+import FormInputFieldSide from "../components/FormInputFieldSide";
 import {
   Flex,
   Heading,
@@ -58,27 +58,27 @@ const Modem = () => {
           <FormControl>
             <Stack spacing={4}>
               <Stack spacing={4} direction="column">
-                <FormInputField
-                  label="Modem Brand"
+                <FormInputFieldSide
+                  label="Brand"
                   name="modem-brand"
                   value={modemBrand}
-                  placeholder="FOUR-FAITH / HUAWEI"
+                  placeholder=""
                   onChange={(e) => setModemBrand(e.target.value)}
-                ></FormInputField>
-                <FormInputField
-                  label="Modem Type"
+                ></FormInputFieldSide>
+                <FormInputFieldSide
+                  label="Type"
                   name="modem-type"
                   value={modemType}
-                  placeholder="DUAL SIM"
+                  placeholder=""
                   onChange={(e) => setModemType(e.target.value)}
-                ></FormInputField>
-                <FormInputField
-                  label="Modem SN"
+                ></FormInputFieldSide>
+                <FormInputFieldSide
+                  label="SN"
                   name="modem-sn"
                   value={modemSN}
-                  placeholder="FH123123123"
+                  placeholder=""
                   onChange={(e) => setModemSN(e.target.value)}
-                ></FormInputField>
+                ></FormInputFieldSide>
               </Stack>
               <Button
                 marginTop={8}
