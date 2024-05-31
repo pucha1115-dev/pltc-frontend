@@ -1,14 +1,36 @@
-import React from 'react'
-import {Input, Box, FormLabel} from '@chakra-ui/react'
-import {COLORS} from '../constants'
+/* eslint-disable react/prop-types */
 
-const FormInputField = ({label, name, value, type='text', placeholder, width = "auto", p=0, onChange}) => {
+import { Input, Box, FormLabel } from "@chakra-ui/react";
+import { COLORS } from "../constants";
+
+const FormInputField = ({
+  label,
+  name,
+  value,
+  type = "text",
+  placeholder,
+  width = "auto",
+  onChange,
+}) => {
   return (
-    <Box p={p} width={width}>
-    <FormLabel color={COLORS.TEXT}>{label}</FormLabel>
-    <Input type={type} name={name} value={value} onChange={onChange} placeholder={placeholder} backgroundColor={COLORS.BACKGROUND} color={COLORS.TEXT} borderColor={COLORS.FOREGROUND}></Input>
+    <Box width={width}>
+      <FormLabel style={{ color: COLORS.TEXT, fontSize: "14px" }}>
+        {label}
+      </FormLabel>
+      <Input
+        borderRadius={5}
+        size="sm"
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        backgroundColor={COLORS.BACKGROUND}
+        color={COLORS.TEXT}
+        borderColor={COLORS.FOREGROUND}
+      ></Input>
     </Box>
-  )
-}
+  );
+};
 
-export default FormInputField
+export default FormInputField;
