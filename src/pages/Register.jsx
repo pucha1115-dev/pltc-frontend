@@ -10,6 +10,7 @@ import {
 import FormInputField from "../components/FormInputField";
 import { useState, useEffect } from "react";
 import { COLORS } from "../constants";
+import axios from "axios";
 
 const Register = () => {
   const [agentNumber, setAgentNumber] = useState("");
@@ -62,18 +63,30 @@ const Register = () => {
 
   const postData = {
     number: agentNumber,
-    Name: getFullName(mi, firstName, lastName, suffix)
+    name: getFullName(mi, firstName, lastName, suffix)
       .trim()
-      .replace(/\s+/g, " "),
-    address: address,
-    city: city,
-    province: province,
+      .replace(/\s+/g, " ")
+      .toUpperCase(),
+    address: address.toUpperCase(),
+    city: city.toUpperCase(),
+    province: province.toUpperCase(),
     region: region,
     zip_code: zip,
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(postData);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/agents/1/",
+        postData
+      );
+      if (response.status === 200) {
+        console.log(response.data);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -108,7 +121,7 @@ const Register = () => {
               direction={direction}
               justify="space-between"
               alignItems="start"
-              spacing={4}
+              spacing={2}
             >
               <FormInputField
                 label="First Name"
@@ -152,7 +165,7 @@ const Register = () => {
               direction={direction}
               justify="space-between"
               alignItems="start"
-              spacing={4}
+              spacing={2}
             >
               <FormInputField
                 label="City"

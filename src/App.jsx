@@ -1,11 +1,10 @@
-import Register from './pages/Register.jsx'
-import './App.css'
+import Register from "./pages/Register.jsx";
+import Modem from "./pages/Modem.jsx";
+import Sim from "./pages/Sim.jsx";
+import "./App.css";
 
 function App() {
-
-  return (
-    <Register/>
-  )
+  return <Sim />;
 }
 
-export default App
+export default App;
