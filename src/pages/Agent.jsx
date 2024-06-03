@@ -11,6 +11,7 @@ import FormInputField from "../components/FormInputField";
 import { useState, useEffect } from "react";
 import { COLORS } from "../constants";
 import axios from "axios";
+import FormInputSelectVertical from '../components/FormInputSelectVertical'
 
 const Register = () => {
   const [agentNumber, setAgentNumber] = useState("");
@@ -181,13 +182,14 @@ const Register = () => {
                 value={province}
                 onChange={(e) => setProvince(e.target.value)}
               />
-              <FormInputField
+              <FormInputSelectVertical
                 label="Region"
                 placeholder="07"
                 width="20"
                 name="region"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
+                choices = {['06', '07', '08', '09', '10', '11', '12', '13', '14']}
               />
               <FormInputField
                 label="ZIP"

@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 
-import { Input, Box, FormLabel, HStack } from "@chakra-ui/react";
+import { Select, Box, FormLabel, HStack } from "@chakra-ui/react";
 import { COLORS } from "../constants";
+import { css } from "@emotion/react";
 
-const FormInputFieldSide = ({
+const FormInputSelect = ({
   label,
   name,
   value,
@@ -11,6 +12,7 @@ const FormInputFieldSide = ({
   placeholder,
   width = "auto",
   onChange,
+  choices = [],
 }) => {
   return (
     <Box width={width}>
@@ -23,9 +25,9 @@ const FormInputFieldSide = ({
         >
           {label}
         </FormLabel>
-        <Input
+        <Select
           borderRadius={5}
-        
+          bg={COLORS.BACKGROUND}
           type={type}
           name={name}
           value={value}
@@ -34,10 +36,23 @@ const FormInputFieldSide = ({
           backgroundColor={COLORS.BACKGROUND}
           color={COLORS.TEXT}
           borderColor={COLORS.FOREGROUND}
-        ></Input>
+          css={css`
+            option {
+              background-color: ${COLORS.BACKGROUND};
+              color: ${COLORS.TEXT};
+            }
+            option:hover {
+              background-color: ${COLORS.HOVER};
+            }
+          `}
+        > {choices.map((item, index) => {
+          return <option  key={index}>
+            {item}
+          </option>
+        })}</Select>
       </HStack>
     </Box>
   );
 };
 
-export default FormInputFieldSide;
+export default FormInputSelect;

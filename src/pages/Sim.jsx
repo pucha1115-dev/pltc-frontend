@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FormInputFieldSide from "../components/FormInputFieldSide";
+import FormInputSelect from '../components/FormInputSelect'
 import {
   Flex,
   Heading,
@@ -37,19 +38,13 @@ const Sim = () => {
     iccid: iccid,
     carrier: carrier.toUpperCase(),
     apn: apn.toUpperCase(),
+    ip: ip,
     username: username.toLowerCase(),
     password: password,
   }
 
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post("http://localhost:8000/api/sims/", {});
-      if (response.status === 200) {
-        console.log(response.data);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
+  const handleSubmit = () => {
+    console.log(postData)
   };
 
   return (
@@ -69,7 +64,7 @@ const Sim = () => {
           margin={5}
         >
           <Heading as="h1" marginBottom={20} marginTop={2} color={COLORS.TEXT}>
-            Modem Details
+            SIM Details
           </Heading>
           <FormControl>
             <Stack spacing={4}>
@@ -89,20 +84,21 @@ const Sim = () => {
                   onChange={(e) => setMinHp(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
-                  label="IP Address"
-                  name="apn"
+                  label="IP ADDRESS"
+                  name="ip-address"
                   type="text"
                   value={ip}
                   placeholder=""
                   onChange={(e) => setIp(e.target.value)}
                 ></FormInputFieldSide>
-                <FormInputFieldSide
-                  label="Carrier"
-                  name="carrier"
+                <FormInputSelect
+                  label="CARRIER"
+                  name="CARRIER"
                   value={carrier}
-                  placeholder=""
+                  placeholder="SELECT CARRIER"
+                  choices = {["SMART", "GLOBE"]}
                   onChange={(e) => setCarrier(e.target.value)}
-                ></FormInputFieldSide>
+                ></FormInputSelect>
                 <FormInputFieldSide
                   label="APN"
                   name="apn"
@@ -111,14 +107,14 @@ const Sim = () => {
                   onChange={(e) => setApn(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
-                  label="Username"
+                  label="USERNAME"
                   name="username"
                   value={username}
                   placeholder=""
                   onChange={(e) => setUsername(e.target.value)}
                 ></FormInputFieldSide>
                 <FormInputFieldSide
-                  label="Password"
+                  label="PASSWORD"
                   name="password"
                   type="text"
                   value={password}
