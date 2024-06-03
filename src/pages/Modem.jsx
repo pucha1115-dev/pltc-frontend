@@ -10,15 +10,16 @@ import {
 } from "@chakra-ui/react";
 import { COLORS } from "../constants";
 import axios from "axios";
+import FormInputSelect from "../components/FormInputSelect";
 
 const Modem = () => {
   const [modemSN, setModemSN] = useState("");
   const [modemBrand, setModemBrand] = useState("");
   const [modemType, setModemType] = useState("");
 
-  useEffect(()=> {
+  useEffect(() => {
     getModemList();
-  },[])
+  }, []);
 
   const postData = {
     sn: modemSN.toUpperCase(),
@@ -42,10 +43,10 @@ const Modem = () => {
 
   const getModemList = async () => {
     const response = await axios.get("http://localhost:8000/api/modems/");
-    if(response.status === 200){
-      console.log(response.data)
+    if (response.status === 200) {
+      console.log(response.data);
     }
-  }
+  };
 
   return (
     <>
@@ -59,7 +60,7 @@ const Modem = () => {
           maxW={600}
           bg={COLORS.FOREGROUND}
           color="white"
-          p={20}
+          p={8}
           borderRadius={10}
           margin={5}
         >
@@ -69,22 +70,24 @@ const Modem = () => {
           <FormControl>
             <Stack spacing={4}>
               <Stack spacing={4} direction="column">
-                <FormInputFieldSide
-                  label="Brand"
+                <FormInputSelect
+                  label="BRAND"
                   name="modem-brand"
                   value={modemBrand}
-                  placeholder=""
+                  placeholder="------"
                   onChange={(e) => setModemBrand(e.target.value)}
-                ></FormInputFieldSide>
-                <FormInputFieldSide
-                  label="Type"
+                  choices={["FOUR-FAITH", "HUAWEI", "VECTRAS"]}
+                ></FormInputSelect>
+                <FormInputSelect
+                  label="TYPE"
                   name="modem-type"
                   value={modemType}
-                  placeholder=""
+                  placeholder="------"
                   onChange={(e) => setModemType(e.target.value)}
-                ></FormInputFieldSide>
+                  choices={["SINGLE SIM", "DUAL SIM"]}
+                ></FormInputSelect>
                 <FormInputFieldSide
-                  label="SN"
+                  label="SERIAL NO."
                   name="modem-sn"
                   value={modemSN}
                   placeholder=""
@@ -97,7 +100,7 @@ const Modem = () => {
                 backgroundColor={COLORS.ACCENT}
                 onClick={handleSubmit}
               >
-                Submit
+                SUBMIT
               </Button>
             </Stack>
           </FormControl>

@@ -16,16 +16,17 @@ const FormInputSelect = ({
 }) => {
   return (
     <Box width={width}>
-      <HStack align="center" spacing={4}>
+      <HStack>
         <FormLabel
-          style={{ color: COLORS.TEXT, fontSize: "16px" }}
-          width="120px"
+          style={{ color: COLORS.TEXT, fontSize: "14px" }}
+          width="130px"
           padding={0}
           margin={0}
         >
           {label}
         </FormLabel>
         <Select
+          size="sm"
           borderRadius={5}
           bg={COLORS.BACKGROUND}
           type={type}
@@ -45,11 +46,12 @@ const FormInputSelect = ({
               background-color: ${COLORS.HOVER};
             }
           `}
-        > {choices.map((item, index) => {
-          return <option  key={index}>
-            {item}
-          </option>
-        })}</Select>
+        >
+          {" "}
+          {choices.map((item, index) => {
+            return <option key={index}>{item}</option>;
+          })}
+        </Select>
       </HStack>
     </Box>
   );

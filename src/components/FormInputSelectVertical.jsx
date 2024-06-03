@@ -15,8 +15,8 @@ const FormInputSelectVertical = ({
   choices = [],
 }) => {
   return (
-    <Box width={width}>
-    
+    <VStack spacing={4}>
+      <Box width={width}>
         <FormLabel
           style={{ color: COLORS.TEXT, fontSize: "16px" }}
           width="120px"
@@ -47,13 +47,14 @@ const FormInputSelectVertical = ({
               background-color: ${COLORS.HOVER};
             }
           `}
-        > {choices.map((item, index) => {
-          return <option  key={index}>
-            {item}
-          </option>
-        })}</Select>
-     
-    </Box>
+        >
+          {" "}
+          {choices.map((item, index) => {
+            return <option key={index}>{item}</option>;
+          })}
+        </Select>
+      </Box>
+    </VStack>
   );
 };
 

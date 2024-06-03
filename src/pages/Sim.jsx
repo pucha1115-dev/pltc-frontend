@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FormInputFieldSide from "../components/FormInputFieldSide";
-import FormInputSelect from '../components/FormInputSelect'
+import FormInputSelect from "../components/FormInputSelect";
 import {
   Flex,
   Heading,
@@ -21,17 +21,16 @@ const Sim = () => {
   const [username, setUsername] = useState("");
   const [password, setPasswrod] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     GetSimList();
-  },[])
+  }, []);
 
   const GetSimList = async () => {
     const response = await axios.get("http://localhost:8000/api/sims/");
-    if(response.status === 200){
-      console.log(response.data)
+    if (response.status === 200) {
+      console.log(response.data);
     }
-    
-  }
+  };
 
   const postData = {
     min_hp_number: min_hp,
@@ -41,10 +40,10 @@ const Sim = () => {
     ip: ip,
     username: username.toLowerCase(),
     password: password,
-  }
+  };
 
   const handleSubmit = () => {
-    console.log(postData)
+    console.log(postData);
   };
 
   return (
@@ -96,7 +95,7 @@ const Sim = () => {
                   name="CARRIER"
                   value={carrier}
                   placeholder="SELECT CARRIER"
-                  choices = {["SMART", "GLOBE"]}
+                  choices={["SMART", "GLOBE"]}
                   onChange={(e) => setCarrier(e.target.value)}
                 ></FormInputSelect>
                 <FormInputFieldSide
@@ -128,7 +127,7 @@ const Sim = () => {
                 backgroundColor={COLORS.ACCENT}
                 onClick={handleSubmit}
               >
-                Submit
+                SUBMIT
               </Button>
             </Stack>
           </FormControl>

@@ -11,7 +11,7 @@ import FormInputField from "../components/FormInputField";
 import { useState, useEffect } from "react";
 import { COLORS } from "../constants";
 import axios from "axios";
-import FormInputSelectVertical from '../components/FormInputSelectVertical'
+import FormInputSelectVertical from "../components/FormInputSelectV2";
 
 const Register = () => {
   const [agentNumber, setAgentNumber] = useState("");
@@ -111,7 +111,7 @@ const Register = () => {
         <FormControl>
           <Stack spacing={4}>
             <FormInputField
-              label="Agent No."
+              label="AGENT NO."
               placeholder="12345678"
               name="agentNumber"
               width="100px"
@@ -125,15 +125,15 @@ const Register = () => {
               spacing={2}
             >
               <FormInputField
-                label="First Name"
-                placeholder="John"
+                label="FIRST NAME"
+                placeholder="JANE"
                 name="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
               <FormInputField
-                label="Last Name"
-                placeholder="Doe"
+                label="LAST NAME"
+                placeholder="DOE"
                 name="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -147,7 +147,7 @@ const Register = () => {
                 onChange={(e) => setMi(e.target.value)}
               />
               <FormInputField
-                label="Suffix"
+                label="SUFFIX"
                 placeholder="JR."
                 width="20"
                 name="suffix"
@@ -156,8 +156,8 @@ const Register = () => {
               />
             </Stack>
             <FormInputField
-              label="Address"
-              placeholder="123 Street, Brgy. Arbor"
+              label="ADDRESS"
+              placeholder="123 STREET, BRGY. ARBOR"
               name="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -169,27 +169,27 @@ const Register = () => {
               spacing={2}
             >
               <FormInputField
-                label="City"
-                placeholder="Boljoon"
+                label="CITY"
+                placeholder="BOLJOON"
                 name="city"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
               <FormInputField
-                label="Province"
-                placeholder="Cebu"
+                label="PROVINCE"
+                placeholder="CEBU"
                 name="province"
                 value={province}
                 onChange={(e) => setProvince(e.target.value)}
               />
               <FormInputSelectVertical
-                label="Region"
-                placeholder="07"
+                label="REGION"
+                placeholder="--"
                 width="20"
                 name="region"
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
-                choices = {['06', '07', '08', '09', '10', '11', '12', '13', '14']}
+                choices={["06", "07", "08", "09", "10", "11", "12", "13", "14"]}
               />
               <FormInputField
                 label="ZIP"
@@ -206,7 +206,7 @@ const Register = () => {
               backgroundColor={COLORS.ACCENT}
               onClick={handleSubmit}
             >
-              Submit
+              SUBMIT
             </Button>
           </Stack>
         </FormControl>
