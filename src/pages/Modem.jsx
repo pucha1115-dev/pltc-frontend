@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormInputFieldSide from "../components/FormInputFieldSide";
 import {
   Flex,
@@ -16,6 +16,10 @@ const Modem = () => {
   const [modemBrand, setModemBrand] = useState("");
   const [modemType, setModemType] = useState("");
 
+  useEffect(()=> {
+    getModemList();
+  },[])
+
   const postData = {
     sn: modemSN.toUpperCase(),
     brand: modemBrand.toUpperCase(),
@@ -24,8 +28,8 @@ const Modem = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/modems/",
+      const response = await axios.patch(
+        "http://localhost:8000/api/modems/7/",
         postData
       );
       if (response.status === 200) {
@@ -35,6 +39,13 @@ const Modem = () => {
       alert(error.message);
     }
   };
+
+  const getModemList = async () => {
+    const response = await axios.get("http://localhost:8000/api/modems/");
+    if(response.status === 200){
+      console.log(response.data)
+    }
+  }
 
   return (
     <>

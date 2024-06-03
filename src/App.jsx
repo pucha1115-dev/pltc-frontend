@@ -4,7 +4,7 @@ import Sim from "./pages/Sim.jsx";
 import "./App.css";
 
 function App() {
-  return <Modem />;
+  return <Sim />;
 }
 
 export default App;

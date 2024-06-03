@@ -16,8 +16,8 @@ const FormInputFieldSide = ({
     <Box width={width}>
       <HStack align="center" spacing={4}>
         <FormLabel
-          style={{ color: COLORS.TEXT, fontSize: "14px" }}
-          width="80px"
+          style={{ color: COLORS.TEXT, fontSize: "18px" }}
+          width="100px"
           padding={0}
           margin={0}
         >
@@ -25,7 +25,7 @@ const FormInputFieldSide = ({
         </FormLabel>
         <Input
           borderRadius={5}
-          size="sm"
+        
           type={type}
           name={name}
           value={value}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInputFieldSide from "../components/FormInputFieldSide";
 import {
   Flex,
@@ -19,6 +19,27 @@ const Sim = () => {
   const [ip, setIp] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPasswrod] = useState("");
+
+  useEffect(()=>{
+    GetSimList();
+  },[])
+
+  const GetSimList = async () => {
+    const response = await axios.get("http://localhost:8000/api/sims/");
+    if(response.status === 200){
+      console.log(response.data)
+    }
+    
+  }
+
+  const postData = {
+    min_hp_number: min_hp,
+    iccid: iccid,
+    carrier: carrier.toUpperCase(),
+    apn: apn.toUpperCase(),
+    username: username.toLowerCase(),
+    password: password,
+  }
 
   const handleSubmit = async () => {
     try {
@@ -98,7 +119,7 @@ const Sim = () => {
                 ></FormInputFieldSide>
                 <FormInputFieldSide
                   label="Password"
-                  name="apn"
+                  name="password"
                   type="text"
                   value={password}
                   placeholder=""
