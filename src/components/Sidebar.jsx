@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { Avatar, Flex, Text, Divider, Heading, IconButton } from '@chakra-ui/react'
 import { COLORS } from '../constants'
 import {FiCalendar, FiDollarSign, FiHome, FiMenu, FiSettings, FiUser} from 'react-icons/fi'
-import { FaPaw } from "react-icons/fa6";
+import { FaSimCard } from "react-icons/fa6";
+import { IoDocumentText } from "react-icons/io5";
+import { BsModem } from "react-icons/bs";
+
 import NavItem from './NavItem'
 
 const Sidebar = () => {
@@ -45,24 +48,23 @@ const Sidebar = () => {
         alignItems={navSize === 'small'? 'center': 'flex-start'}
         mb={4}
       >
-       
+      
         <Flex flexDir='column' mt={4} align='center' w='100%'>
-          <Avatar size={navSize === 'small'? 'sm': '180px'} src='../assets/images/profile.png'/>
-            <Flex display={navSize === 'small'? 'none': 'flex'} flexDir='column' ml={4}>
-              <Heading mt={10} as='h3' size='sm'>John Paul Geralla</Heading>
-             
-            </Flex>
+          <Avatar size={navSize === 'small'? 'md': '180px'} src='../assets/images/profile.png'/>
+        
+              <Heading display={navSize === 'small'? 'none': 'flex'} mt={10} as='h3' size='sm'>John Paul Geralla</Heading>
+            
+          
         </Flex>
         <Divider mt={10} display={navSize === 'small'? 'none': 'flex'}/>
 
       </Flex>
 
-        <NavItem navSize={navSize} title='Dashboard' icon={FiHome} active={true}/>
-        <NavItem navSize={navSize} title='Calendar' icon={FiCalendar} active={false}/>
-        <NavItem navSize={navSize} title='Clients' icon={FiUser} active={false}/>
-        <NavItem navSize={navSize} title='Animals' icon={FaPaw} active={false}/>
-        <NavItem navSize={navSize} title='Stocks' icon={FiDollarSign} active={false}/>
-        <NavItem navSize={navSize} title='Settings' icon={FiSettings} active={false}/>
+        <NavItem navSize={navSize} title='Dashboard' icon={FiHome} active={false}/>
+        <NavItem navSize={navSize} title='Agent Master' icon={FiUser} active={false}/>
+        <NavItem navSize={navSize} title='SIM Master' icon={FaSimCard} active={false}/>
+        <NavItem navSize={navSize} title='Modem Master' icon={BsModem} active={false}/>
+        <NavItem navSize={navSize} title='ROF' icon={IoDocumentText} active={false} />
       </Flex>
     </Flex>
   )

@@ -1,14 +1,16 @@
-import { Flex, Link, Menu, MenuButton, MenuList, Icon, Text } from "@chakra-ui/react"
+import { Flex, Link, Menu, MenuButton, Icon, Text } from "@chakra-ui/react"
 import {COLORS} from '../constants'
+
+
 
 const NavItem = ({navSize, icon, title, active}) => {
   return (
     <Flex
       flexDir='column'
       w='100%'
-      alignItems={navSize === 'small'? 'center':'center'}
+      alignItems={navSize === 'small'? 'center':'flex-start'}
     >
-      <Menu placement="center">
+      <Menu placement="bottom">
         <Link
           backgroundColor={active && COLORS.BACKGROUND}
           p={3}
