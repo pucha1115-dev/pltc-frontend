@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Avatar, Flex, Text, Divider, Heading, IconButton } from '@chakra-ui/react'
-import { COLORS } from '../constants'
-import {FiCalendar, FiDollarSign, FiHome, FiMenu, FiSettings, FiUser} from 'react-icons/fi'
+import { COLORS } from '../../constants'
+import {FiHome, FiMenu, FiUser} from 'react-icons/fi'
 import { FaSimCard } from "react-icons/fa6";
 import { IoDocumentText } from "react-icons/io5";
 import { BsModem } from "react-icons/bs";

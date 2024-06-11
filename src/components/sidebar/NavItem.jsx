@@ -1,5 +1,5 @@
 import { Flex, Link, Menu, MenuButton, Icon, Text } from "@chakra-ui/react"
-import {COLORS} from '../constants'
+import {COLORS} from '../../constants'
 
 
 
