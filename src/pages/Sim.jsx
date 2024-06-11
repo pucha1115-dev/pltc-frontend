@@ -62,7 +62,7 @@ const Sim = () => {
           borderRadius={10}
           margin={5}
         >
-          <Heading as="h1" marginBottom={20} marginTop={2} color={COLORS.TEXT}>
+          <Heading as="h1" marginBottom={20} marginTop={2}>
             SIM Details
           </Heading>
           <FormControl>

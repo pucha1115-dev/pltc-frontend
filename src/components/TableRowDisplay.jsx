@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Tr, Td } from "@chakra-ui/react";
-import { COLORS } from "../constants";
+
 
 const TableRowDisplay = ({
   iccid,
@@ -13,7 +13,7 @@ const TableRowDisplay = ({
   onClick,
 }) => {
   return (
-    <Tr border="1px solid" color={COLORS.TEXT} onClick={onClick}>
+    <Tr border="1px solid" onClick={onClick}>
       <Td border="1px solid">{iccid}</Td>
       <Td border="1px solid">{min_hp}</Td>
       <Td border="1px solid">{ip}</Td>

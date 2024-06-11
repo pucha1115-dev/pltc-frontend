@@ -31,7 +31,7 @@ const SimMasterList =  () => {
       >
     <TableContainer border='1px solid' width='70%'>
       <Table size='sm' variant='unstyled'>
-        <Thead border='1px solid' color={COLORS.TEXT}>
+        <Thead border='1px solid' >
           <Tr >
             <Th fontWeight='900' border='1px solid' >ICCID</Th>
             <Th fontWeight='900' border='1px solid' >MIN/HP</Th>

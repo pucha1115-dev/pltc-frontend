@@ -28,7 +28,6 @@ const AgentMasterList = () => {
       );
       if (response.status === 200) {
         setAgentList(response.data);
-        console.log(response.data);
       }
     } catch (error) {
       alert(error.message);

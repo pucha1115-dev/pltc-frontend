@@ -7,12 +7,15 @@ import "./App.css";
 import SimMasterList from "./pages/SimMasterList.jsx";
 import AgentMasterList from "./pages/AgentMasterList.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
+import MainPage from './pages/MainPage.jsx'
+
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AgentMasterList />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/agent_master_list" element={<AgentMasterList />} />
         <Route path="/agent_info" element={<AgentMaster />} />
         <Route path="/agent" element={<Agent />} />
         <Route path="/sim" element={<Sim />} />
