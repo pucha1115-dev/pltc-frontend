@@ -1,10 +1,11 @@
-import React from 'react'
-import Sidebar from '../components/sidebar/Sidebar'
+import Sidebar from "../components/sidebar/Sidebar";
 
 const MainPage = () => {
   return (
-    <div><Sidebar /></div>
-  )
-}
+    <div>
+      <Sidebar />
+    </div>
+  );
+};
 
-export default MainPage
+export default MainPage;
