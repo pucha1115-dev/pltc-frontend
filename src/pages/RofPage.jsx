@@ -1,20 +1,31 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { Flex, Container, Heading, HStack, Stack, Box, Text, Input, Icon, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Container,
+  Heading,
+  HStack,
+  Stack,
+  Box,
+  Text,
+  Input,
+  Icon,
+  Button,
+} from "@chakra-ui/react";
 import { COLORS } from "../constants";
 import axios from "axios";
-import DatePicker from 'react-datepicker'
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
-import '../css/custom-datepicker.css'
+import "../css/custom-datepicker.css";
 import TextDisplayRof from "../components/TextDisplayRof";
 
-
 const RofPage = () => {
-  const [screenSize, setScreenSize] = useState('');
+  const [screenSize, setScreenSize] = useState("");
   const [rofDate, setRofDate] = useState(new Date());
   const [agentInfoDetails, setAgentInfoDetails] = useState(null);
   const [disableInput, setDisableInput] = useState(true);
-  
+
   const [agentNumber, setAgentNumber] = useState("");
   const [agentName, setAgentName] = useState("");
   const [address, setAddress] = useState("");
@@ -35,24 +46,26 @@ const RofPage = () => {
   const [modemSN, setModemSN] = useState("");
 
   const getAgentInfoDetail = async () => {
-    try{
-      const response = await axios.get(`http://localhost:8000/api/agent-infos/${agentNumber}/`);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/agent-infos/${agentNumber}/`
+      );
       if (response.status === 200) {
         setAgentInfoDetails(response.data);
       }
-    } catch(error){
+    } catch (error) {
       alert(error.message);
     }
-  }
+  };
 
   const handleSearch = async () => {
     await getAgentInfoDetail();
-  }
+  };
 
-  useEffect(()=>{
-    if(agentInfoDetails){
-      console.log(agentInfoDetails)
-      setDisableInput(false)
+  useEffect(() => {
+    if (agentInfoDetails) {
+      console.log(agentInfoDetails);
+      setDisableInput(false);
 
       const {
         agent_details: { number, name, address, city, province, region },
@@ -81,7 +94,7 @@ const RofPage = () => {
       setModemType(type);
       setModemSN(sn);
     }
-  },[agentInfoDetails])
+  }, [agentInfoDetails]);
 
   return (
     <Flex
@@ -91,7 +104,7 @@ const RofPage = () => {
       justifyContent="center"
       alignItems="center"
       height="100vh"
-      width='100vw'
+      width="100vw"
       mt={10}
       mb={10}
     >
@@ -99,45 +112,119 @@ const RofPage = () => {
         padding="40px 20px 20px 20px"
         bg={COLORS.FOREGROUND}
         maxW={900}
-        height='100%'
+        height="100%"
         borderRadius={10}
       >
-        <Stack direction='row' justifyContent='center'>
-        <Heading size="lg" color={COLORS.TEXT} marginBottom="20px">
-          ROF
-        </Heading>
+        <Stack direction="row" justifyContent="center">
+          <Heading size="lg" color={COLORS.TEXT} marginBottom="20px">
+            ROF
+          </Heading>
         </Stack>
-        <Stack direction='column'>
-        <Stack direction='row' justifyContent='left' alignItems='center'>
-        <Text fontSize="14px" fontWeight='bold' width='85px' color={COLORS.TEXT}>ACTION: </Text>
-        <Input textTransform='uppercase' size='sm' border={0} padding="5px" fontSize="14px" width="200px" borderRadius="4px" backgroundColor={COLORS.BACKGROUND} color={COLORS.TEXT}></Input>
+        <Stack direction="column">
+          <Stack direction="row" justifyContent="left" alignItems="center">
+            <Text
+              fontSize="14px"
+              fontWeight="bold"
+              width="85px"
+              color={COLORS.TEXT}
+            >
+              ACTION:{" "}
+            </Text>
+            <Input
+              textTransform="uppercase"
+              size="sm"
+              border={0}
+              padding="5px"
+              fontSize="14px"
+              width="200px"
+              borderRadius="4px"
+              backgroundColor={COLORS.BACKGROUND}
+              color={COLORS.TEXT}
+            ></Input>
+          </Stack>
+          <Stack
+            direction="row"
+            mb={10}
+            justifyContent="left"
+            alignItems="center"
+          >
+            <Text
+              fontSize="14px"
+              fontWeight="bold"
+              width="85px"
+              color={COLORS.TEXT}
+            >
+              DATE:{" "}
+            </Text>
+            <Box
+              size="sm"
+              border={0}
+              padding="5px"
+              fontSize="14px"
+              width="200px"
+              borderRadius="4px"
+              backgroundColor={COLORS.BACKGROUND}
+              color={COLORS.TEXT}
+            >
+              <div className="datepicker-container">
+                <FaCalendarAlt className="datepicker-icon" />
+                <DatePicker
+                  className="datepicker-input"
+                  toggleCalendarOnIconClick
+                  selected={rofDate}
+                  onChange={(date) => setRofDate(date)}
+                />
+              </div>
+            </Box>
+          </Stack>
         </Stack>
-        <Stack direction='row' mb={10} justifyContent='left' alignItems='center'>
-        <Text fontSize="14px" fontWeight='bold' width='85px' color={COLORS.TEXT}>DATE: </Text>
-        <Box size='sm' border={0} padding="5px" fontSize="14px" width="200px" borderRadius="4px" backgroundColor={COLORS.BACKGROUND} color={COLORS.TEXT}>
-        <div className="datepicker-container">
-        <FaCalendarAlt className="datepicker-icon" />
-          <DatePicker className="datepicker-input" toggleCalendarOnIconClick selected={rofDate} onChange={(date) => setRofDate(date)} />
-        </div>
-        </Box>
-        
-        </Stack>
-        </Stack>
-        
+
         <Heading size="md" color={COLORS.TEXT} marginBottom="40px">
           AGENT DETAILS:
         </Heading>
         <Stack direction="column" spacing={2}>
-          <Stack direction='row' alignItems='center' spacing={2}>
-          <TextDisplayRof label="AGENT NO.:" value={agentNumber}  customWidth="89px" customInputWidth="200" disabled={false} onChange={(e) => setAgentNumber(e.target.value)}  />
-          <Button w={20} height='28px' backgroundColor={COLORS.TEXT} fontSize='14px' onClick={handleSearch}>Search</Button>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <TextDisplayRof
+              label="AGENT NO.:"
+              value={agentNumber}
+              customWidth="89px"
+              customInputWidth="200"
+              disabled={false}
+              onChange={(e) => setAgentNumber(e.target.value)}
+            />
+            <Button
+              w={20}
+              borderRadius={4}
+              height="28px"
+              backgroundColor={COLORS.TEXT}
+              fontSize="14px"
+              onClick={handleSearch}
+            >
+              Search
+            </Button>
           </Stack>
-          
-          <TextDisplayRof label="AGENT NAME:" value={agentName} disabled={disableInput} />
-          <TextDisplayRof label="ADDRESS:" value={address} disabled={disableInput} />
-          <TextDisplayRof label="CITY:" value={city} disabled={disableInput}  />
-          <TextDisplayRof label="PROVINCE:" value={province} disabled={disableInput} />
-          <TextDisplayRof label="REGION:" value={region} disabled={disableInput} />
+
+          <TextDisplayRof
+            label="AGENT NAME:"
+            value={agentName}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="ADDRESS:"
+            value={address}
+            disabled={disableInput}
+          />
+          <TextDisplayRof label="CITY:" value={city} disabled={disableInput} />
+          <TextDisplayRof
+            label="PROVINCE:"
+            value={province}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="REGION:"
+            value={region}
+            disabled={disableInput}
+          />
           <TextDisplayRof label="ZIP:" value={zip} disabled={disableInput} />
         </Stack>
         <Heading
@@ -153,40 +240,40 @@ const RofPage = () => {
             <TextDisplayRof
               customWidth="130px"
               label="SIM1 IP:"
-              value="test"
-              disabled={disableInput} 
+              value={sim1IP}
+              disabled={disableInput}
             />
             <TextDisplayRof
               customWidth="50px"
               label="ICCID"
-              value="test"
-              disabled={disableInput} 
+              value={sim1ICCID}
+              disabled={disableInput}
             />
             <TextDisplayRof
               customWidth="50px"
               label="CARRIER:"
-              value="test"
-              disabled={disableInput} 
+              value={sim1Carrier}
+              disabled={disableInput}
             />
           </HStack>
           <HStack spacing={4}>
             <TextDisplayRof
               customWidth="130px"
               label="SIM2 IP:"
-              value="test"
-              disabled={disableInput} 
+              value={sim2IP}
+              disabled={disableInput}
             />
             <TextDisplayRof
               customWidth="50px"
               label="ICCID:"
-              value="test"
-              disabled={disableInput} 
+              value={sim2ICCID}
+              disabled={disableInput}
             />
             <TextDisplayRof
               customWidth="50px"
               label="CARRIER:"
-              value="test"
-              disabled={disableInput} 
+              value={sim2Carrier}
+              disabled={disableInput}
             />
           </HStack>
         </Stack>
@@ -199,14 +286,25 @@ const RofPage = () => {
           MODEM DETAILS:
         </Heading>
         <Stack direction="column" spacing={2}>
-          <TextDisplayRof label="BRAND:" value="test" disabled={disableInput}  />
-          <TextDisplayRof label="TYPE:" value="test" disabled={disableInput} />
-          <TextDisplayRof label="SERIAL NO.:" value="test" disabled={disableInput} />
+          <TextDisplayRof
+            label="BRAND:"
+            value={modemBrand}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="TYPE:"
+            value={modemType}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="SERIAL NO.:"
+            value={modemSN}
+            disabled={disableInput}
+          />
         </Stack>
       </Container>
     </Flex>
   );
 };
 
-
-export default RofPage
+export default RofPage;

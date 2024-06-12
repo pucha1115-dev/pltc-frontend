@@ -6,7 +6,6 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const AgentMaster = () => {
-  const [screenSize, setScreenSize] = useState('')
   const [agentInfoDetails, setAgentInfoDetails] = useState(null);
   const location = useLocation();
   const { data } = location.state || {};
@@ -15,7 +14,7 @@ const AgentMaster = () => {
     const getAgentInfoDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/agent-infos/${data.id}/`
+          `http://localhost:8000/api/agent-infos/${data.agentNumber}/`
         );
         if (response.status === 200) {
           setAgentInfoDetails(response.data);
@@ -26,7 +25,7 @@ const AgentMaster = () => {
     };
 
     getAgentInfoDetail();
-  }, [data.id]);
+  }, [data.agentNumber]);
 
   if (!agentInfoDetails) {
     return (
@@ -34,10 +33,6 @@ const AgentMaster = () => {
         loading....
       </Box>
     );
-  }
-
-  const getWindowDimension = () => {
-    const {innerWidth: width, innerHeight: height} = window
   }
 
   const {
@@ -55,10 +50,9 @@ const AgentMaster = () => {
       justifyContent="center"
       alignItems="center"
       height="80vh"
-      width='100vw'
+      width="100vw"
       mt={10}
       mb={10}
-     
     >
       <Container
         padding="40px 20px 20px 20px"

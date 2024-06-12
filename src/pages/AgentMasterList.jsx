@@ -8,7 +8,7 @@ import {
   Tbody,
   Flex,
 } from "@chakra-ui/react";
-import TableRowDisplay from "../components/TableRowDisplay";
+import TableRowDisplayAgent from "../components/TableRowDisplayAgent";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -34,15 +34,15 @@ const AgentMasterList = () => {
     }
   };
 
-  const handleClick = (agent_info_id) => {
-    const data = { id: agent_info_id };
+  const handleClick = (agent_info_agent_number) => {
+    const data = { agentNumber: agent_info_agent_number };
     navigate("/agent_info", { state: { data } });
   };
   return (
     <Flex
       justifyContent="center"
       height="100vh"
-      width='100vw'
+      width="100vw"
       alignItems="start"
       backgroundColor={COLORS.BACKGROUND}
       padding="20px"
@@ -76,16 +76,16 @@ const AgentMasterList = () => {
           </Thead>
           <Tbody>
             {agentList.map((agent, index) => (
-              <TableRowDisplay
+              <TableRowDisplayAgent
                 key={index}
-                iccid={agent.agent_details.number}
-                min_hp={agent.agent_details.name}
-                ip={agent.agent_details.address}
-                apn={agent.agent_details.city}
-                username={agent.agent_details.province}
-                password={agent.agent_details.region}
-                carrier="7000"
-                onClick={() => handleClick(agent.id)}
+                agentNumber={agent.agent_details.number}
+                agentName={agent.agent_details.name}
+                address={agent.agent_details.address}
+                city={agent.agent_details.city}
+                province={agent.agent_details.province}
+                region={agent.agent_details.region}
+                zip="7000"
+                onClick={() => handleClick(agent.agent_details.number)}
               />
             ))}
           </Tbody>
