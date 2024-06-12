@@ -8,11 +8,18 @@ import SimMasterList from "./pages/SimMasterList.jsx";
 import AgentMasterList from "./pages/AgentMasterList.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import MainPage from './pages/MainPage.jsx'
+import Sidebar from "./components/sidebar/Sidebar.jsx";
+import { Flex } from "@chakra-ui/react";
+import RofPage from "./pages/RofPage.jsx";
 
 
 function App() {
   return (
     <Router>
+      <Flex flexDir='row' w='100vw'>
+      
+      <Sidebar/>
+  
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/agent_master_list" element={<AgentMasterList />} />
@@ -21,8 +28,10 @@ function App() {
         <Route path="/sim" element={<Sim />} />
         <Route path="/modem" element={<Modem />} />
         <Route path="/sim_master_list" element={<SimMasterList />} />
+        <Route path="/rof" element={<RofPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      </Flex>
     </Router>
   );
 }

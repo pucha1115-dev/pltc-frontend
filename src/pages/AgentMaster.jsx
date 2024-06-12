@@ -6,6 +6,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const AgentMaster = () => {
+  const [screenSize, setScreenSize] = useState('')
   const [agentInfoDetails, setAgentInfoDetails] = useState(null);
   const location = useLocation();
   const { data } = location.state || {};
@@ -29,10 +30,14 @@ const AgentMaster = () => {
 
   if (!agentInfoDetails) {
     return (
-      <Box w="100%" h="calc(100vh)" bg={COLORS.BACKGROUND}>
+      <Box mt={20} w="100%" h="calc(100vh)" bg={COLORS.BACKGROUND}>
         loading....
       </Box>
     );
+  }
+
+  const getWindowDimension = () => {
+    const {innerWidth: width, innerHeight: height} = window
   }
 
   const {
@@ -46,16 +51,21 @@ const AgentMaster = () => {
 
   return (
     <Flex
-      backgroundColor={COLORS.FOREGROUND}
+      backgroundColor={COLORS.BACKGROUND}
       justifyContent="center"
       alignItems="center"
-      height="100vh"
+      height="80vh"
+      width='100vw'
+      mt={10}
+      mb={10}
+     
     >
       <Container
         padding="40px 20px 20px 20px"
         bg={COLORS.FOREGROUND}
         maxW={900}
-        height="100vh"
+        height={750}
+        borderRadius={10}
       >
         <Heading size="md" color={COLORS.TEXT} marginBottom="40px">
           AGENT DETAILS:

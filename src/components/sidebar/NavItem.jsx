@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Flex, Link, Menu, MenuButton, Icon, Text } from "@chakra-ui/react";
+import { Flex, Box,  Menu, MenuButton, Icon, Text } from "@chakra-ui/react";
+import {Link} from 'react-router-dom'
 import { COLORS } from "../../constants";
 
-const NavItem = ({ navSize, icon, title, active }) => {
+const NavItem = ({ navSize, icon, title, active, linkTo }) => {
   return (
     <Flex
       flexDir="column"
@@ -10,7 +11,8 @@ const NavItem = ({ navSize, icon, title, active }) => {
       alignItems={navSize === "small" ? "center" : "flex-start"}
     >
       <Menu placement="bottom">
-        <Link
+        <Link to={linkTo}>
+        <Box
           backgroundColor={active && COLORS.BACKGROUND}
           p={3}
           _hover={{
@@ -18,7 +20,7 @@ const NavItem = ({ navSize, icon, title, active }) => {
             backgroundColor: COLORS.BACKGROUND,
             color: "black",
           }}
-          w={navSize === "large" && "100%"}
+          w={navSize === "large" && "200px"}
           borderRadius={navSize === "small" ? "8px" : "0px"}
         >
           <MenuButton w="100%">
@@ -37,6 +39,7 @@ const NavItem = ({ navSize, icon, title, active }) => {
               </Text>
             </Flex>
           </MenuButton>
+        </Box>
         </Link>
       </Menu>
     </Flex>

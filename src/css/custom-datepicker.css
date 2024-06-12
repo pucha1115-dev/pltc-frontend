@@ -1,0 +1,27 @@
+/* custom-datepicker.css */
+
+/* Change the background color of the DatePicker input */
+.react-datepicker__input-container input {
+  background-color: transparent; /* Black background */
+  color: #c2c0f0; /* White text color */
+}
+
+/* custom-datepicker.css */
+
+.datepicker-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.datepicker-input {
+  width: 100%;
+  padding-left: 2.5rem; /* Adjust padding to make space for the icon */
+}
+
+.datepicker-icon {
+  position: absolute;
+  left: 10px;
+  pointer-events: none; /* Ensure the icon doesn't block input clicks */
+  color: #c2c0f0; /* Adjust icon color */
+}

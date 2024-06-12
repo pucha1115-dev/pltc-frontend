@@ -28,6 +28,7 @@ const SimMasterList =  () => {
         alignItems="start"
         backgroundColor={COLORS.BACKGROUND}
         padding='20px'
+        width='100vw'
       >
     <TableContainer border='1px solid' width='70%'>
       <Table size='sm' variant='unstyled'>
@@ -40,6 +41,7 @@ const SimMasterList =  () => {
             <Th fontWeight='900' border='1px solid' >USERNAME</Th>
             <Th fontWeight='900' border='1px solid' >PASSWORD</Th>
             <Th fontWeight='900' border='1px solid' >CARRIER</Th>
+            <Th fontWeight='900' border='1px solid' >STATUS</Th>
           </Tr>
         </Thead>
         <Tbody >
@@ -51,7 +53,8 @@ const SimMasterList =  () => {
             apn={sim.apn} 
             username={sim.username} 
             password={sim.password} 
-            carrier={sim.carrier}/>
+            carrier={sim.carrier}
+            status={sim.status}/>
           ))}
 
         </Tbody>

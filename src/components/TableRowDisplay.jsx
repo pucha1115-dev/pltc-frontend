@@ -10,6 +10,7 @@ const TableRowDisplay = ({
   username,
   password,
   carrier,
+  status,
   onClick,
 }) => {
   return (
@@ -21,6 +22,7 @@ const TableRowDisplay = ({
       <Td border="1px solid">{username}</Td>
       <Td border="1px solid">{password}</Td>
       <Td border="1px solid">{carrier}</Td>
+      <Td border="1px solid">{status}</Td>
     </Tr>
   );
 };

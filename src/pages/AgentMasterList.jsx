@@ -42,6 +42,7 @@ const AgentMasterList = () => {
     <Flex
       justifyContent="center"
       height="100vh"
+      width='100vw'
       alignItems="start"
       backgroundColor={COLORS.BACKGROUND}
       padding="20px"

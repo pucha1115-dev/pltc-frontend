@@ -3,7 +3,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 const MainPage = () => {
   return (
     <div>
-      <Sidebar />
+      MAIN PAGE
     </div>
   );
 };
