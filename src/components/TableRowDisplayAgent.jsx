@@ -12,7 +12,7 @@ const TableRowDisplayAgent = ({
   onClick,
 }) => {
   return (
-    <Tr border="1px solid" onClick={onClick}>
+    <Tr border="1px solid" onClick={onClick} cursor="pointer">
       <Td border="1px solid">{agentNumber}</Td>
       <Td border="1px solid">{agentName}</Td>
       <Td border="1px solid">{address}</Td>
