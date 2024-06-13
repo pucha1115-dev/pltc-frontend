@@ -104,9 +104,10 @@ const RofPage = () => {
       justifyContent="center"
       alignItems="center"
       height="100vh"
-      width="100vw"
+      width="calc(100vw - 200px)"
       mt={10}
       mb={10}
+      marginLeft='200px'
     >
       <Container
         padding="40px 20px 20px 20px"

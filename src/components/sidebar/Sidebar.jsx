@@ -19,6 +19,7 @@ const Sidebar = () => {
     w={navSize === 'small'? '75px': '200px'}
     flexDir='column'
     justifyContent='space-between'
+    marginRight='200px'
     >
       <Flex 
       flexDir='column'

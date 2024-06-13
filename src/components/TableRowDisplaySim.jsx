@@ -2,7 +2,7 @@
 import { Tr, Td } from "@chakra-ui/react";
 
 
-const TableRowDisplay = ({
+const TableRowDisplaySim = ({
   iccid,
   min_hp,
   ip,
@@ -27,4 +27,4 @@ const TableRowDisplay = ({
   );
 };
 
-export default TableRowDisplay;
+export default TableRowDisplaySim;
