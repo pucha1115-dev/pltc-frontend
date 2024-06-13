@@ -76,9 +76,14 @@ const SimMasterList = () => {
         <UploadSimCsv></UploadSimCsv>
       </Stack>
 
-      <TableContainer border="1px solid" width="100%" overflowY="scroll">
+      <TableContainer borderBottom="1px solid" width="100%" overflowY="scroll">
         <Table size="sm" variant="unstyled">
-          <Thead position="sticky" top={-0.1} backgroundColor="black">
+          <Thead
+            position="sticky"
+            top={0}
+            backgroundColor="black"
+            style={{ boxShadow: "inset 1px -1px  #c2c0f0, 1px -1px  #c2c0f0" }}
+          >
             <Tr>
               <Th fontWeight="900" border="1px solid">
                 ICCID
