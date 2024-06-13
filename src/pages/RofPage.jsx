@@ -107,7 +107,7 @@ const RofPage = () => {
       width="calc(100vw - 200px)"
       mt={10}
       mb={10}
-      marginLeft='200px'
+      
     >
       <Container
         padding="40px 20px 20px 20px"
