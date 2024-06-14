@@ -8,7 +8,11 @@ import {
   FormControl,
   Stack,
   Button,
+  Divider,
+  Text,
+  Box
 } from "@chakra-ui/react";
+import UploadSimCsv from "./UploadSimCsv";
 import { COLORS } from "../constants";
 import axios from "axios";
 
@@ -53,6 +57,8 @@ const Sim = () => {
         height="100vh"
         alignItems="center"
         backgroundColor={COLORS.BACKGROUND}
+        marginLeft={200}
+        w={800}
       >
         <Container
           maxW={600}
@@ -66,7 +72,7 @@ const Sim = () => {
             SIM Details
           </Heading>
           <FormControl>
-            <Stack spacing={4}>
+            <Stack  spacing={4}>
               <Stack spacing={4} direction="column">
                 <FormInputFieldSide
                   label="ICCID"
@@ -123,12 +129,22 @@ const Sim = () => {
               </Stack>
               <Button
                 marginTop={8}
-                marginBottom={2}
+                marginBottom={5}
                 backgroundColor={COLORS.ACCENT}
                 onClick={handleSubmit}
               >
                 SUBMIT
               </Button>
+              <Stack alignItems='center' justifyContent='center' direction='row'>
+              <Divider></Divider><Text>OR</Text><Divider></Divider>
+            
+              </Stack>
+              <Box mt={5} display='flex' justifyContent='center'>
+              <Text>Upload a CSV file.</Text>
+              </Box>
+              <Stack justifyContent='center' direction='row'>
+              <UploadSimCsv></UploadSimCsv>
+              </Stack>
             </Stack>
           </FormControl>
         </Container>

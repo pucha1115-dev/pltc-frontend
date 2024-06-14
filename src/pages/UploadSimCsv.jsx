@@ -1,6 +1,7 @@
 import { Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import {COLORS} from '../constants'
 
 const UploadSimCsv = () => {
   const [file, setFile] = useState(null);
@@ -28,8 +29,17 @@ const UploadSimCsv = () => {
 
   return (
     <>
-      <Input type="file" onChange={onFileChange}></Input>
-      <Button onClick={handleUpload}>Upload</Button>
+      <Input 
+      width='220px' 
+      alignItems='center' 
+      justifyContent='center' 
+      size='sm' 
+      border={0} 
+      type="file" 
+      onChange={onFileChange}>
+        
+      </Input>
+      <Button size='sm' backgroundColor={COLORS.ACCENT}  onClick={handleUpload}>Upload</Button>
     </>
   );
 };
