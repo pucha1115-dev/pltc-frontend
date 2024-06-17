@@ -14,7 +14,7 @@ const TableRowDisplaySim = ({
   onClick,
 }) => {
   return (
-    <Tr border="1px solid" onClick={onClick}>
+    <Tr border="1px solid" onClick={onClick} cursor='pointer'>
       <Td border="1px solid">{iccid}</Td>
       <Td border="1px solid">{min_hp}</Td>
       <Td border="1px solid">{ip}</Td>

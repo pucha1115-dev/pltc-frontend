@@ -105,6 +105,7 @@ const RofPage = () => {
       alignItems="center"
       height="100vh"
       width="calc(100vw - 200px)"
+      ml='200px'
       mt={10}
       mb={10}
       

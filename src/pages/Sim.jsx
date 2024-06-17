@@ -16,6 +16,7 @@ import UploadSimCsv from "./UploadSimCsv";
 import { COLORS } from "../constants";
 import axios from "axios";
 
+
 const Sim = () => {
   const [iccid, setIccid] = useState("");
   const [min_hp, setMinHp] = useState("");
@@ -24,6 +25,7 @@ const Sim = () => {
   const [ip, setIp] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPasswrod] = useState("");
+
 
   useEffect(() => {
     GetSimList();
@@ -133,7 +135,7 @@ const Sim = () => {
                 backgroundColor={COLORS.ACCENT}
                 onClick={handleSubmit}
               >
-                SUBMIT
+                ADD
               </Button>
               <Stack alignItems='center' justifyContent='center' direction='row'>
               <Divider></Divider><Text>OR</Text><Divider></Divider>

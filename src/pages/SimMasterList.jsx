@@ -17,11 +17,14 @@ import TableRowDisplaySim from "../components/TableRowDisplaySim";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {Link} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
 
 const SimMasterList = () => {
   const [simList, setSimList] = useState([]);
   const [filteredSimList, setFilteredSimList] = useState(simList);
   const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getSimList();
@@ -38,6 +41,12 @@ const SimMasterList = () => {
       alert(error.message);
     }
   };
+
+  const handleSimClick = (sim) => {
+    const data = {sim: sim}
+    navigate('/sim',{state:{data}})
+
+  } 
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -130,16 +139,18 @@ const SimMasterList = () => {
           <Tbody>
             {filteredSimList.map((sim, index) => (
               <TableRowDisplaySim
-                key={index}
-                iccid={sim.iccid}
-                min_hp={sim.min_hp_number}
-                ip={sim.ip}
-                apn={sim.apn}
-                username={sim.username}
-                password={sim.password}
-                carrier={sim.carrier}
-                status={sim.status}
-              />
+              key={index}
+              iccid={sim.iccid}
+              min_hp={sim.min_hp_number}
+              ip={sim.ip}
+              apn={sim.apn}
+              username={sim.username}
+              password={sim.password}
+              carrier={sim.carrier}
+              status={sim.status}
+              onClick={() => handleSimClick(sim)}
+            />
+              
             ))}
           </Tbody>
         </Table>
