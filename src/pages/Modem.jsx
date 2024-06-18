@@ -7,10 +7,14 @@ import {
   FormControl,
   Stack,
   Button,
+  Divider,
+  Box,
+  Text
 } from "@chakra-ui/react";
 import { COLORS } from "../constants";
 import axios from "axios";
 import FormInputSelect from "../components/FormInputSelect";
+import UploadModemCsv from './UploadModemCsv'
 
 const Modem = () => {
   const [modemSN, setModemSN] = useState("");
@@ -54,6 +58,8 @@ const Modem = () => {
         justifyContent="center"
         height="100vh"
         alignItems="center"
+        width='calc(100vw - 200px)'
+        ml='200px'
         backgroundColor={COLORS.BACKGROUND}
       >
         <Container
@@ -102,6 +108,16 @@ const Modem = () => {
               >
                 SUBMIT
               </Button>
+              <Stack alignItems='center' justifyContent='center' direction='row'>
+              <Divider></Divider><Text>OR</Text><Divider></Divider>
+            
+              </Stack>
+              <Box mt={5} display='flex' justifyContent='center'>
+              <Text>Upload a CSV file.</Text>
+              </Box>
+              <Stack justifyContent='center' direction='row'>
+              <UploadModemCsv></UploadModemCsv>
+              </Stack>
             </Stack>
           </FormControl>
         </Container>

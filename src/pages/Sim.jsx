@@ -58,9 +58,9 @@ const Sim = () => {
         justifyContent="center"
         height="100vh"
         alignItems="center"
+        width='calc(100vw - 200px)'
+        ml='200px'
         backgroundColor={COLORS.BACKGROUND}
-        marginLeft={200}
-        w={800}
       >
         <Container
           maxW={600}

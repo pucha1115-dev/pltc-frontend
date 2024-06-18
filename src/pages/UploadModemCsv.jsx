@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import {COLORS} from '../constants'
 
-const UploadSimCsv = () => {
+const UploadModemCsv = () => {
   const [file, setFile] = useState(null);
 
   const handleUpload = async () => {
@@ -11,7 +11,7 @@ const UploadSimCsv = () => {
     formData.append("file", file);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/sims/upload-csv/",
+        "http://localhost:8000/api/modems/upload-csv/",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -39,9 +39,9 @@ const UploadSimCsv = () => {
       onChange={onFileChange}>
         
       </Input>
-      <Button  size='sm' backgroundColor={COLORS.ACCENT}  onClick={handleUpload}>Upload</Button>
+      <Button size='sm' backgroundColor={COLORS.ACCENT}  onClick={handleUpload}>Upload</Button>
     </>
   );
 };
 
-export default UploadSimCsv;
+export default UploadModemCsv;

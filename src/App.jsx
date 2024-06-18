@@ -11,6 +11,7 @@ import MainPage from './pages/MainPage.jsx'
 import Sidebar from "./components/sidebar/Sidebar.jsx";
 import { Flex } from "@chakra-ui/react";
 import RofPage from "./pages/RofPage.jsx";
+import ModemMasterList from "./pages/ModemMasterList.jsx";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/agent_master_list" element={<AgentMasterList />} />
+        <Route path="/modem_master_list" element={<ModemMasterList/>} />
         <Route path="/agent_info" element={<AgentMaster />} />
         <Route path="/agent" element={<Agent />} />
         <Route path="/sim" element={<Sim />} />

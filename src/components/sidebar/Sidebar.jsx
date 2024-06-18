@@ -64,7 +64,7 @@ const Sidebar = () => {
         <NavItem navSize={navSize} title='Dashboard' icon={FiHome} linkTo='/' active={false}/>
         <NavItem navSize={navSize} title='Agent Master' icon={FiUser} linkTo='/agent_master_list' active={false}/>
         <NavItem navSize={navSize} title='SIM Master' icon={FaSimCard} linkTo='/sim_master_list' active={false}/>
-        <NavItem navSize={navSize} title='Modem Master' icon={BsModem} active={false}/>
+        <NavItem navSize={navSize} title='Modem Master' icon={BsModem} linkTo='/modem_master_list' active={false}/>
         <NavItem navSize={navSize} title='ROF' icon={IoDocumentText} linkTo='/rof' active={false} />
       </Flex>
     </Flex>
