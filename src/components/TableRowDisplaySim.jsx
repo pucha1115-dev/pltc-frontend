@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Tr, Td } from "@chakra-ui/react";
-
+import { FiEdit } from "react-icons/fi";
 
 const TableRowDisplaySim = ({
   iccid,
@@ -14,7 +14,10 @@ const TableRowDisplaySim = ({
   onClick,
 }) => {
   return (
-    <Tr border="1px solid" onClick={onClick} cursor='pointer'>
+    <Tr border="1px solid">
+      <Td border="1px solid" onClick={onClick} cursor="pointer">
+        <FiEdit color="green" />
+      </Td>
       <Td border="1px solid">{iccid}</Td>
       <Td border="1px solid">{min_hp}</Td>
       <Td border="1px solid">{ip}</Td>

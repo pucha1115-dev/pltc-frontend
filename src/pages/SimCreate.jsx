@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FormInputFieldSide from "../components/FormInputFieldSide";
 import FormInputSelect from "../components/FormInputSelect";
 import {
@@ -10,14 +10,13 @@ import {
   Button,
   Divider,
   Text,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import UploadSimCsv from "./UploadSimCsv";
 import { COLORS } from "../constants";
 import axios from "axios";
 
-
-const Sim = () => {
+const SimCreate = () => {
   const [iccid, setIccid] = useState("");
   const [min_hp, setMinHp] = useState("");
   const [carrier, setCarrier] = useState("");
@@ -26,17 +25,9 @@ const Sim = () => {
   const [username, setUsername] = useState("");
   const [password, setPasswrod] = useState("");
 
-
-  useEffect(() => {
-    GetSimList();
-  }, []);
-
-  const GetSimList = async () => {
-    const response = await axios.get("http://localhost:8000/api/sims/");
-    if (response.status === 200) {
-      console.log(response.data);
-    }
-  };
+  const [iccidValidatorMessage, setIccidValidatorMessage] = useState("");
+  const [min_hpValidatorMessage, setMin_hpValidatorMessage] = useState("");
+  const [carrierValidatorMessage, setCarrierValidatorMessage] = useState("");
 
   const postData = {
     min_hp_number: min_hp,
@@ -48,8 +39,67 @@ const Sim = () => {
     password: password,
   };
 
-  const handleSubmit = () => {
-    console.log(postData);
+  const validateIccid = (data) => {
+    return data.length === 16 && /^\d*$/.test(data);
+  };
+
+  const validateMinHp = (data) => {
+    return data.length === 10 && /^\d*$/.test(data);
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+
+    if (!validateIccid(iccid)) {
+      setIccidValidatorMessage("ICCID must consist of exactly 16 digits.");
+      isValid = false;
+    } else {
+      setIccidValidatorMessage("");
+    }
+
+    if (!validateMinHp(min_hp)) {
+      setMin_hpValidatorMessage("MIN/HP must consist of exactly 10 digits.");
+      isValid = false;
+    } else {
+      setMin_hpValidatorMessage("");
+    }
+
+    if (!carrier) {
+      setCarrierValidatorMessage("Please select a carrier.");
+      isValid = false;
+    } else {
+      setCarrierValidatorMessage("");
+    }
+
+    return isValid;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/sims/",
+        postData
+      );
+      if (response.status === 201) {
+        alert("Added Successfully");
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        const error_response =
+          error.response.data.detail || JSON.stringify(error.response.data); //get the error response data/details
+        const errorData = JSON.parse(error_response); //parse to json
+
+        const errorField = Object.keys(errorData)[0]; // retrieve the field with error
+        const errorMessage = errorData[errorField][0]; // retrieve the error of the filed
+
+        alert(errorField.toUpperCase() + " : " + errorMessage); // Set the error message
+      } else {
+        alert({ detail: "An unexpected error occurred" });
+      }
+    }
   };
 
   return (
@@ -58,8 +108,8 @@ const Sim = () => {
         justifyContent="center"
         height="100vh"
         alignItems="center"
-        width='calc(100vw - 200px)'
-        ml='200px'
+        width="calc(100vw - 200px)"
+        ml="200px"
         backgroundColor={COLORS.BACKGROUND}
       >
         <Container
@@ -74,7 +124,7 @@ const Sim = () => {
             SIM Details
           </Heading>
           <FormControl>
-            <Stack  spacing={4}>
+            <Stack spacing={4}>
               <Stack spacing={4} direction="column">
                 <FormInputFieldSide
                   label="ICCID"
@@ -83,6 +133,11 @@ const Sim = () => {
                   placeholder=""
                   onChange={(e) => setIccid(e.target.value)}
                 ></FormInputFieldSide>
+                {iccidValidatorMessage && (
+                  <Text size={5} color="red">
+                    {iccidValidatorMessage}
+                  </Text>
+                )}
                 <FormInputFieldSide
                   label="MIN/HP"
                   name="min_hp"
@@ -90,6 +145,11 @@ const Sim = () => {
                   placeholder=""
                   onChange={(e) => setMinHp(e.target.value)}
                 ></FormInputFieldSide>
+                {min_hpValidatorMessage && (
+                  <Text size={5} color="red">
+                    {min_hpValidatorMessage}
+                  </Text>
+                )}
                 <FormInputFieldSide
                   label="IP ADDRESS"
                   name="ip-address"
@@ -106,6 +166,11 @@ const Sim = () => {
                   choices={["SMART", "GLOBE"]}
                   onChange={(e) => setCarrier(e.target.value)}
                 ></FormInputSelect>
+                {carrierValidatorMessage && (
+                  <Text size={5} color="red">
+                    {carrierValidatorMessage}
+                  </Text>
+                )}
                 <FormInputFieldSide
                   label="APN"
                   name="apn"
@@ -137,15 +202,20 @@ const Sim = () => {
               >
                 ADD
               </Button>
-              <Stack alignItems='center' justifyContent='center' direction='row'>
-              <Divider></Divider><Text>OR</Text><Divider></Divider>
-            
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                direction="row"
+              >
+                <Divider></Divider>
+                <Text>OR</Text>
+                <Divider></Divider>
               </Stack>
-              <Box mt={5} display='flex' justifyContent='center'>
-              <Text>Upload a CSV file.</Text>
+              <Box mt={5} display="flex" justifyContent="center">
+                <Text>Upload a CSV file.</Text>
               </Box>
-              <Stack justifyContent='center' direction='row'>
-              <UploadSimCsv></UploadSimCsv>
+              <Stack justifyContent="center" direction="row">
+                <UploadSimCsv></UploadSimCsv>
               </Stack>
             </Stack>
           </FormControl>
@@ -155,4 +225,4 @@ const Sim = () => {
   );
 };
 
-export default Sim;
+export default SimCreate;

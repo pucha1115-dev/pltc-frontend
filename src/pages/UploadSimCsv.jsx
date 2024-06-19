@@ -13,6 +13,12 @@ const UploadSimCsv = () => {
 
     setLoading(true);
 
+    if (!file) {
+      alert("Please upload a file.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/sims/upload-csv/",

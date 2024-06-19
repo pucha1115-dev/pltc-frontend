@@ -20,6 +20,7 @@ import {
 import TableRowDisplaySim from "../components/TableRowDisplaySim";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { MdCallToAction } from "react-icons/md";
 
 const SimMasterList = () => {
   const [simList, setSimList] = useState([]);
@@ -43,11 +44,10 @@ const SimMasterList = () => {
         if (searchValue !== "") {
           // If there's a search value, filter simList
           filterSimList(data);
-         
         } else {
           // Otherwise, set filteredSimList to the entire simList
           setFilteredSimList(data);
-          setTotalRecords(data.length)
+          setTotalRecords(data.length);
         }
       }
     } catch (error) {
@@ -72,7 +72,7 @@ const SimMasterList = () => {
 
   const handleSimClick = (sim) => {
     const data = { sim: sim };
-    navigate("/sim", { state: { data } });
+    navigate("/sim_update", { state: { data } });
   };
 
   const handleSearch = (e) => {
@@ -140,7 +140,7 @@ const SimMasterList = () => {
               </Text>
             </Box>
             <Button size="sm" bg="green" color="white" mr={5}>
-              <Link to="/sim">Add SIM</Link>
+              <Link to="/sim_create">Add SIM</Link>
             </Button>
           </Stack>
         </form>
@@ -154,6 +154,9 @@ const SimMasterList = () => {
             style={{ boxShadow: "inset 1px -1px  #c2c0f0, 1px -1px  #c2c0f0" }}
           >
             <Tr>
+              <Th fontWeight="900" w="50px" border="1px solid">
+                <MdCallToAction />
+              </Th>
               <Th fontWeight="900" border="1px solid">
                 ICCID
               </Th>
