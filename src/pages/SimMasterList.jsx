@@ -43,9 +43,11 @@ const SimMasterList = () => {
         if (searchValue !== "") {
           // If there's a search value, filter simList
           filterSimList(data);
+         
         } else {
           // Otherwise, set filteredSimList to the entire simList
           setFilteredSimList(data);
+          setTotalRecords(data.length)
         }
       }
     } catch (error) {
