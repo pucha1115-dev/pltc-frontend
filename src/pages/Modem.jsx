@@ -20,36 +20,15 @@ const Modem = () => {
   const [modemSN, setModemSN] = useState("");
   const [modemBrand, setModemBrand] = useState("");
   const [modemType, setModemType] = useState("");
-
-  useEffect(() => {
-    getModemList();
-  }, []);
+  const [modemOwner, setModemOwner] = useState("");
+  const [modemRemarks, setModemRemarks] = useState("")
 
   const postData = {
-    sn: modemSN.toUpperCase(),
-    brand: modemBrand.toUpperCase(),
-    type: modemType.toUpperCase(),
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.patch(
-        "http://localhost:8000/api/modems/7/",
-        postData
-      );
-      if (response.status === 200) {
-        console.log(response.data);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const getModemList = async () => {
-    const response = await axios.get("http://localhost:8000/api/modems/");
-    if (response.status === 200) {
-      console.log(response.data);
-    }
+    modem_sn: modemSN.toUpperCase(),
+    modem_brand: modemBrand.toUpperCase(),
+    modem_type: modemType.toUpperCase(),
+    modem_owner: modemOwner.toUpperCase(),
+    modem_remarks: modemRemarks.toUpperCase(),
   };
 
   return (
@@ -99,14 +78,28 @@ const Modem = () => {
                   placeholder=""
                   onChange={(e) => setModemSN(e.target.value)}
                 ></FormInputFieldSide>
+                <FormInputFieldSide
+                  label="OWNER"
+                  name="modem-owner"
+                  value={modemOwner}
+                  placeholder=""
+                  onChange={(e) => setModemOwner(e.target.value)}
+                ></FormInputFieldSide>
+                <FormInputFieldSide
+                  label="REMARKS"
+                  name="modem-remarks"
+                  value={modemRemarks}
+                  placeholder=""
+                  onChange={(e) => setModemRemarks(e.target.value)}
+                ></FormInputFieldSide>
               </Stack>
               <Button
                 marginTop={8}
                 marginBottom={2}
                 backgroundColor={COLORS.ACCENT}
-                onClick={handleSubmit}
+              
               >
-                SUBMIT
+                ADD
               </Button>
               <Stack alignItems='center' justifyContent='center' direction='row'>
               <Divider></Divider><Text>OR</Text><Divider></Divider>

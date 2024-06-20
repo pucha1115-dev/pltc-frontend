@@ -28,7 +28,7 @@ const SimMasterList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Adjust items per page as needed
-  const [totalRecords, setTotalRecords] = useState(0); // Total number of records
+  const [count, setCount] = useState(0); // Total number of records
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const SimMasterList = () => {
         } else {
           // Otherwise, set filteredSimList to the entire simList
           setFilteredSimList(data);
-          setTotalRecords(data.length);
+          setCount(data.length);
         }
       }
     } catch (error) {
@@ -67,7 +67,7 @@ const SimMasterList = () => {
         item.ip === searchValue
     );
     setFilteredSimList(filterBySearch); // Update filteredSimList based on search criteria
-    setTotalRecords(filterBySearch.length);
+    setCount(filterBySearch.length);
   };
 
   const handleSimClick = (sim) => {
@@ -81,7 +81,7 @@ const SimMasterList = () => {
     if (searchValue === "") {
       // If searchValue is empty, reset to show all simList
       setFilteredSimList(simList);
-      setTotalRecords(simList.length);
+      setCount(simList.length);
     } else {
       // Filter simList based on search criteria
       filterSimList(simList);
@@ -136,7 +136,7 @@ const SimMasterList = () => {
                 Search
               </Button>
               <Text ml={10} alignSelf="flex-end">
-                Records Found: {totalRecords}
+                Records Found: {count}
               </Text>
             </Box>
             <Button size="sm" bg="green" color="white" mr={5}>
@@ -145,7 +145,7 @@ const SimMasterList = () => {
           </Stack>
         </form>
       </FormControl>
-      <TableContainer borderBottom="1px solid" width="100%">
+      <TableContainer borderBottom="1px solid" width="100%" overflowY="scroll">
         <Table size="sm" variant="unstyled">
           <Thead
             position="sticky"
@@ -206,7 +206,7 @@ const SimMasterList = () => {
           bg={COLORS.ACCENT}
           size="sm"
           onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          isDisabled={currentPage === pageCount || currentPage === 0}
         >
           Previous
         </Button>
@@ -229,7 +229,7 @@ const SimMasterList = () => {
           bg={COLORS.ACCENT}
           size="sm"
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === pageCount || pageCount === 0}
+          isDisabled={currentPage === pageCount || currentPage === 0}
         >
           Next
         </Button>

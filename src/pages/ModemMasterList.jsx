@@ -11,60 +11,93 @@ import {
   Button,
   Stack,
   Box,
-  FormControl
+  Text,
+  FormControl,
+  Select
 } from "@chakra-ui/react";
 import TableRowDisplayModem from "../components/TableRowDisplayModem";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {Link} from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
+import { MdCallToAction } from "react-icons/md";
 
 
 const ModemMasterList = () => {
   const [modemList, setModemList] = useState([]);
   const [filteredModemList, setFilteredModemList] = useState(modemList);
   const [searchValue, setSearchValue] = useState("");
+  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20); // Adjust items per page as needed
   const navigate = useNavigate();
 
   useEffect(() => {
     getModemList();
-  }, []);
+  }, [currentPage]);
 
   const getModemList = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/modems/");
       if (response.status === 200) {
-        setModemList(response.data);
-        setFilteredModemList(response.data);
+        const data = response.data;
+        setModemList(data)
+        if (searchValue !== "") {
+          filterModemList(data);
+        } else {
+          
+          setFilteredModemList(data);
+          setCount(data.length);
+        }
       }
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const handleModemClick = (sim) => {
-    const data = {sim: sim}
+  const handleModemClick = (modem) => {
+    const data = {modem: modem}
     navigate('/modem',{state:{data}})
 
   } 
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchValue === "") {
-      setFilteredModemList(modemList);
-      return;
-    }
-
-    
-    const filterBySearch = modemList.filter(
+  const filterModemList = (list) => {
+    const filterBySearch = list.filter(
       (item) =>
-        item.sn.toLowerCase() === searchValue.toLowerCase() ||
-        item.brand.toLowerCase() === searchValue.toLowerCase() ||
-        item.type.toLowerCase() === searchValue.toLowerCase()
+        item.modem_sn.toLowerCase() === searchValue.toLowerCase().trim() ||
+        item.modem_brand.toLowerCase() === searchValue.toLowerCase().trim() ||
+        item.modem_type.toLowerCase() === searchValue.toLowerCase().trim() ||
+        item.modem_owner.toLowerCase() === searchValue.toLowerCase().trim()
 
     );
     setFilteredModemList(filterBySearch);
+    setCount(filterBySearch.length);
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    if (searchValue === "") {
+      setFilteredModemList(modemList);
+      setCount(modemList.length)
+    
+    } else {
+      filterModemList(modemList)
+    }
+    
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber); // Update currentPage when page is changed
+  };
+
+    // Calculate current items to display based on pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredModemList.slice(indexOfFirstItem, indexOfLastItem);
+  
+    // Calculate total number of pages
+    const pageCount = Math.ceil(filteredModemList.length / itemsPerPage);
 
   return (
     <Flex
@@ -77,6 +110,7 @@ const ModemMasterList = () => {
       flexDir="column"
       marginLeft="200px"
     > <FormControl>
+      <form>
       <Stack direction="row" mb={5} justifyContent='space-between'>
       <Box display='flex' justifyContent='center'>
         <Input
@@ -91,13 +125,16 @@ const ModemMasterList = () => {
           onChange={e => setSearchValue(e.target.value)}
         ></Input>
         <Button type="submit" size='sm' width='100px' backgroundColor={COLORS.TEXT} onClick={handleSearch}>Search</Button>
+        <Text ml={10} alignSelf="flex-end">
+                Records Found: {count}
+              </Text>
         </Box>
-        <Button size='sm' bg='green' color='white' mr={5}><Link to='/modem'>Add SIM</Link></Button>
+        <Button size='sm' bg='green' color='white' mr={5}><Link to='/modem'>Add Modem</Link></Button>
       </Stack>
 
-     
+      </form>
       </FormControl>
-
+     
       <TableContainer borderBottom="1px solid" width="100%" overflowY="scroll">
         <Table size="sm" variant="unstyled">
           <Thead
@@ -107,6 +144,9 @@ const ModemMasterList = () => {
             style={{ boxShadow: "inset 1px -1px  #c2c0f0, 1px -1px  #c2c0f0" }}
           >
             <Tr>
+            <Th fontWeight="900" w="50px" border="1px solid">
+                <MdCallToAction />
+              </Th>
               <Th fontWeight="900" border="1px solid">
                 SERIAL NUMBER
               </Th>
@@ -116,15 +156,23 @@ const ModemMasterList = () => {
               <Th fontWeight="900" border="1px solid">
                 BRAND
               </Th>
+              <Th fontWeight="900" border="1px solid">
+                OWNER
+              </Th>
+              <Th fontWeight="900" border="1px solid">
+                REMARKS
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
-            {filteredModemList.map((modem, index) => (
+            {currentItems.map((modem, index) => (
               <TableRowDisplayModem
               key={index}
-              sn={modem.sn}
-              brand={modem.brand}
-              type={modem.type}
+              sn={modem.modem_sn}
+              brand={modem.modem_brand}
+              type={modem.modem_type}
+              owner={modem.modem_owner}
+              remarks={modem.modem_remarks}
               onClick={() => handleModemClick(modem)}
             />
               
@@ -132,6 +180,39 @@ const ModemMasterList = () => {
           </Tbody>
         </Table>
       </TableContainer>
+      <Stack direction="row" alignItems="end" justifyContent="center" mt={4}>
+        <Button
+          bg={COLORS.ACCENT}
+          size="sm"
+          onClick={() => handlePageChange(currentPage - 1)}
+          isDisabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <Select
+          value={currentPage}
+          onChange={(e) => handlePageChange(parseInt(e.target.value))}
+          size="sm"
+          width="80px"
+          bg="white"
+          color="black"
+          border={0}
+        >
+          {Array.from({ length: pageCount }, (_, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1}
+            </option>
+          ))}
+        </Select>
+        <Button
+          bg={COLORS.ACCENT}
+          size="sm"
+          onClick={() => handlePageChange(currentPage + 1)}
+          isDisabled={currentPage === pageCount || currentPage === 0}
+        >
+          Next
+        </Button>
+      </Stack>
     </Flex>
   );
 };
