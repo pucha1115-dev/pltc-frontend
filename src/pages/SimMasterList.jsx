@@ -16,6 +16,7 @@ import {
   FormControl,
   Text,
   Select,
+  Spinner,
 } from "@chakra-ui/react";
 import TableRowDisplaySim from "../components/TableRowDisplaySim";
 import { Link } from "react-router-dom";
@@ -29,6 +30,7 @@ const SimMasterList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Adjust items per page as needed
   const [count, setCount] = useState(0); // Total number of records
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +38,8 @@ const SimMasterList = () => {
   }, [currentPage]); // Fetch data when currentPage changes
 
   const getSimList = async () => {
+    setLoading(true);
+
     try {
       const response = await axios.get(`http://localhost:8000/api/sims/`);
       if (response.status === 200) {
@@ -44,10 +48,12 @@ const SimMasterList = () => {
         if (searchValue !== "") {
           // If there's a search value, filter simList
           filterSimList(data);
+          setLoading(false);
         } else {
           // Otherwise, set filteredSimList to the entire simList
           setFilteredSimList(data);
           setCount(data.length);
+          setLoading(false);
         }
       }
     } catch (error) {
@@ -201,6 +207,18 @@ const SimMasterList = () => {
           </Tbody>
         </Table>
       </TableContainer>
+      {loading && (
+        <Box
+          display="flex"
+          w="100%"
+          justifyContent="center"
+          mt="10px"
+          mb="10px"
+        >
+          <Spinner alignSelf="center" color="red" />
+        </Box>
+      )}
+
       <Stack direction="row" alignItems="end" justifyContent="center" mt={4}>
         <Button
           bg={COLORS.ACCENT}

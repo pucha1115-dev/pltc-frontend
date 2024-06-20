@@ -11,6 +11,7 @@ import {
 import { COLORS } from "../constants";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import FormInputSelect from "../components/FormInputSelect";
 
 const SimUpdate = () => {
   const [iccid, setIccid] = useState("");
@@ -23,19 +24,19 @@ const SimUpdate = () => {
   const [status, setStatus] = useState("");
   const location = useLocation();
   const [retrievedSimData, setRetrievedSimData] = useState(
-    location.state.data || {}
+    location.state || {}
   );
 
   useEffect(() => {
     const populate = () => {
-      setIccid(retrievedSimData.sim.iccid);
-      setMinHp(retrievedSimData.sim.min_hp_number);
-      setCarrier(retrievedSimData.sim.carrier);
-      setApn(retrievedSimData.sim.apn);
-      setIp(retrievedSimData.sim.ip);
-      setUsername(retrievedSimData.sim.username);
-      setPasswrod(retrievedSimData.sim.password);
-      setStatus(retrievedSimData.sim.status);
+      setIccid(retrievedSimData.data.sim.iccid);
+      setMinHp(retrievedSimData.data.sim.min_hp_number);
+      setCarrier(retrievedSimData.data.sim.carrier);
+      setApn(retrievedSimData.data.sim.apn);
+      setIp(retrievedSimData.data.sim.ip);
+      setUsername(retrievedSimData.data.sim.username);
+      setPasswrod(retrievedSimData.data.sim.password);
+      setStatus(retrievedSimData.data.sim.status);
     };
     populate();
   }, [retrievedSimData]);
@@ -54,12 +55,12 @@ const SimUpdate = () => {
   const handleSubmit = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/sims/${retrievedSimData.sim.id}/`,
+        `http://localhost:8000/api/sims/${retrievedSimData.data.sim.id}/`,
         postData
       );
       if (response.status === 200) {
         alert("Updated successfully!");
-        setRetrievedSimData({ sim: response.data });
+        setRetrievedSimData({ data: { sim: response.data } });
       }
     } catch (error) {
       alert(error.message);
@@ -112,14 +113,14 @@ const SimUpdate = () => {
                   placeholder=""
                   onChange={(e) => setIp(e.target.value)}
                 ></FormInputFieldSide>
-                <FormInputFieldSide
+                <FormInputSelect
                   label="CARRIER"
-                  name="CARRIER"
-                  type="text"
+                  name="carrier"
                   value={carrier}
-                  placeholder=""
+                  placeholder="------"
                   onChange={(e) => setCarrier(e.target.value)}
-                ></FormInputFieldSide>
+                  choices={["SMART", "GLOBE"]}
+                ></FormInputSelect>
                 <FormInputFieldSide
                   label="APN"
                   name="apn"

@@ -1,5 +1,5 @@
 import Agent from "./pages/Agent.jsx";
-import Modem from "./pages/Modem.jsx";
+import ModemCreate from "./pages/ModemCreate.jsx";
 import SimCreate from "./pages/SimCreate.jsx";
 import AgentMaster from "./pages/AgentMaster.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -13,6 +13,7 @@ import { Flex } from "@chakra-ui/react";
 import RofPage from "./pages/RofPage.jsx";
 import ModemMasterList from "./pages/ModemMasterList.jsx";
 import SimUpdate from "./pages/SimUpdate.jsx";
+import ModemUpdate from "./pages/ModemUpdate.jsx";
 function App() {
   return (
     <Router>
@@ -27,7 +28,8 @@ function App() {
           <Route path="/agent" element={<Agent />} />
           <Route path="/sim_create" element={<SimCreate />} />
           <Route path="/sim_update" element={<SimUpdate />} />
-          <Route path="/modem" element={<Modem />} />
+          <Route path="/modem" element={<ModemCreate />} />
+          <Route path="/modem_update" element={<ModemUpdate />} />
           <Route path="/sim_master_list" element={<SimMasterList />} />
           <Route path="/rof" element={<RofPage />} />
           <Route path="*" element={<PageNotFound />} />
