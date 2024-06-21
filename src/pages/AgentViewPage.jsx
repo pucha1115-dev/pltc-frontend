@@ -11,7 +11,7 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import {COLORS} from '../constants'
+import { COLORS } from "../constants";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import TextDisplayRof from "../components/TextDisplayRof";
@@ -20,36 +20,71 @@ const AgentViewPage = () => {
   const [agentRecord, setAgentRecord] = useState([]);
   const [disableInput, setDisableInput] = useState(false);
 
-  const location = useLocation()
-  const [retrievedAgentNumber, setRetrievedAgentNumber] = useState(location.state || {});
+  const location = useLocation();
+  const [retrievedAgentNumber, setRetrievedAgentNumber] = useState(
+    location.state || {}
+  );
 
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const getAgentInfo = async () => {
-      try{
-        console.log('run axios get')
-       // const response = await axios.get('http://localhost:8000/api/agent-infos/40001018/');
-        const response = await axios.get(`http://localhost:8000/api/agent-infos/${retrievedAgentNumber.data.agentNumber}/`);
-        setAgentRecord(response.data)
-        console.log(response.data);
-      }catch(error){
-        alert(error.message);
+  const handleUpload = async () => {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/agent_infos/data/upload-csv/",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      if (response.status === 201) {
+        alert("File upload successful.");
+        setLoading(false);
       }
+    } catch (error) {
+      alert(error.message);
+      setLoading(false);
     }
+  };
 
-    getAgentInfo();
-  },[retrievedAgentNumber])
-
-
-  
-    
-
-  
-
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   return (
-    <>{console.log("render" + agentRecord.length)}</>
- // <>{agentRecord === "render" ?(console.log('no data')) : (console.log(agentRecord[0].agent_details.name))}</>
+    <>
+      <Input
+        width="220px"
+        alignItems="center"
+        justifyContent="center"
+        size="sm"
+        border={0}
+        type="file"
+        onChange={onFileChange}
+      ></Input>
+
+      {loading ? (
+        <Button
+          isLoading
+          size="sm"
+          backgroundColor={COLORS.ACCENT}
+          onClick={handleUpload}
+        >
+          Upload
+        </Button>
+      ) : (
+        <Button
+          size="sm"
+          backgroundColor={COLORS.ACCENT}
+          onClick={handleUpload}
+        >
+          Upload
+        </Button>
+      )}
+    </>
+    // <>{agentRecord === "render" ?(console.log('no data')) : (console.log(agentRecord[0].agent_details.name))}</>
     // <Flex
     //   p={0}
     //   m={0}
@@ -61,7 +96,7 @@ const AgentViewPage = () => {
     //   ml='200px'
     //   mt={10}
     //   mb={10}
-      
+
     // >
     //   <Container
     //     padding="40px 20px 20px 20px"
@@ -200,9 +235,7 @@ const AgentViewPage = () => {
     //     </Stack>
     //   </Container>
     // </Flex>
-  
-  
-  )
-}
+  );
+};
 
-export default AgentViewPage
+export default AgentViewPage;
