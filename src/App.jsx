@@ -14,6 +14,7 @@ import RofPage from "./pages/RofPage.jsx";
 import ModemMasterList from "./pages/ModemMasterList.jsx";
 import SimUpdate from "./pages/SimUpdate.jsx";
 import ModemUpdate from "./pages/ModemUpdate.jsx";
+import AgentViewPage from "./pages/AgentViewPage.jsx";
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/modem_master_list" element={<ModemMasterList />} />
           <Route path="/agent_info" element={<AgentMaster />} />
           <Route path="/agent" element={<Agent />} />
+          <Route path="/agent_view" element={<AgentViewPage />} />
           <Route path="/sim_create" element={<SimCreate />} />
           <Route path="/sim_update" element={<SimUpdate />} />
           <Route path="/modem" element={<ModemCreate />} />

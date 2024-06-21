@@ -27,7 +27,6 @@ const ModemUpdate = () => {
   );
 
   useEffect(() => {
-    console.log(retrievedModemData);
     const populate = () => {
       setModemSN(retrievedModemData.data.modem.modem_sn);
       setModemBrand(retrievedModemData.data.modem.modem_brand);
@@ -49,6 +48,7 @@ const ModemUpdate = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
+     
       const response = await axios.patch(
         `http://localhost:8000/api/modems/${retrievedModemData.data.modem.id}/`,
         postData
@@ -116,14 +116,7 @@ const ModemUpdate = () => {
                     onChange={(e) => setModemBrand(e.target.value)}
                     choices={["FOUR-FAITH", "HUAWEI", "VECTRAS"]}
                   ></FormInputSelect>
-                  <FormInputFieldSide
-                    label="TYPE"
-                    name="modem-type"
-                    value={modemType}
-                    placeholder=""
-                    onChange={(e) => setModemType(e.target.value)}
-                  ></FormInputFieldSide>
-                  {/* <FormInputSelect
+                  <FormInputSelect
                     label="TYPE"
                     name="modem-type"
                     value={modemType}
@@ -131,13 +124,8 @@ const ModemUpdate = () => {
                     onChange={(e) => setModemType(e.target.value)}
                     choices={["SINGLE SIM", "DUAL SIM"]}
                   ></FormInputSelect>
-                  {modemTypeValidatorMessage && (
-                    <Text size={5} color="red">
-                      {modemTypeValidatorMessage}
-                    </Text>
-                  )} */}
                   <FormInputFieldSide
-                    label="OWNER"
+                    label="OWNER" 
                     name="modem-owner"
                     value={modemOwner}
                     placeholder=""

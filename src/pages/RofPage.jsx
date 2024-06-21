@@ -9,7 +9,6 @@ import {
   Box,
   Text,
   Input,
-  Icon,
   Button,
 } from "@chakra-ui/react";
 import { COLORS } from "../constants";

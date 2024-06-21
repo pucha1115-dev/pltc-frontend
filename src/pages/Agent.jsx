@@ -6,12 +6,16 @@ import {
   FormControl,
   Stack,
   useMediaQuery,
+  Divider,
+  Box,
+  Text
 } from "@chakra-ui/react";
 import FormInputField from "../components/FormInputField";
 import { useState, useEffect } from "react";
 import { COLORS } from "../constants";
 import axios from "axios";
 import FormInputSelectVertical from "../components/FormInputSelectV2";
+import UploadAgentCsv from "./UploadAgentCsv";
 
 const Register = () => {
   const [agentNumber, setAgentNumber] = useState("");
@@ -92,11 +96,13 @@ const Register = () => {
 
   return (
     <Flex
-      justifyContent="center"
-      height="100vh"
-      alignItems="center"
-      backgroundColor={COLORS.BACKGROUND}
-    >
+        justifyContent="center"
+        height="100vh"
+        alignItems="center"
+        width="calc(100vw - 200px)"
+        ml="200px"
+        backgroundColor={COLORS.BACKGROUND}
+      >
       <Container
         maxW={600}
         bg={COLORS.FOREGROUND}
@@ -164,9 +170,10 @@ const Register = () => {
             />
             <Stack
               direction={direction}
-              justify="space-between"
+              justify="start"
               alignItems="start"
               spacing={2}
+              w='100%'
             >
               <FormInputField
                 label="CITY"
@@ -191,14 +198,7 @@ const Register = () => {
                 onChange={(e) => setRegion(e.target.value)}
                 choices={["06", "07", "08", "09", "10", "11", "12", "13", "14"]}
               />
-              <FormInputField
-                label="ZIP"
-                placeholder="6000"
-                width="20"
-                name="zip"
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-              />
+          
             </Stack>
             <Button
               marginTop={8}
@@ -208,6 +208,21 @@ const Register = () => {
             >
               SUBMIT
             </Button>
+            <Stack
+                alignItems="center"
+                justifyContent="center"
+                direction="row"
+              >
+                <Divider></Divider>
+                <Text>OR</Text>
+                <Divider></Divider>
+              </Stack>
+              <Box mt={5} display="flex" justifyContent="center">
+                <Text>Upload a CSV file.</Text>
+              </Box>
+              <Stack justifyContent="center" direction="row">
+                <UploadAgentCsv></UploadAgentCsv>
+              </Stack>
           </Stack>
         </FormControl>
       </Container>
