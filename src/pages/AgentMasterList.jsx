@@ -13,11 +13,11 @@ import {
   Stack,
   Input,
   Button,
-  Link,
   Select,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import TableRowDisplayAgent from "../components/TableRowDisplayAgent";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -35,12 +35,14 @@ const AgentMasterList = () => {
 
   useEffect(() => {
     getAgentList();
-  }, [currentPage]);
+  }, []);
 
   const getAgentList = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8000/api/agents/");
+      const response = await axios.get(
+        "http://localhost:8000/api/agent-infos/"
+      );
       if (response.status === 200) {
         const data = response.data;
         setAgentList(data);
@@ -61,20 +63,27 @@ const AgentMasterList = () => {
   const filterAgentList = (list) => {
     const filterBySearch = list.filter(
       (item) =>
-        item.number.toLowerCase() === searchValue.toLowerCase().trim() ||
-        item.name.toLowerCase() === searchValue.toLowerCase().trim() ||
-        item.address.toLowerCase() === searchValue.toLowerCase().trim() ||
-        item.city.toLowerCase() === searchValue.toLowerCase().trim() ||
-        item.province.toLowerCase() === searchValue.toLowerCase().trim() ||
-        item.region.toLowerCase() === searchValue.toLowerCase().trim() ||
-        item.contact.toLowerCase() === searchValue.toLowerCase().trim()
+        item.agent_details.number === searchValue.toLowerCase().trim() ||
+        item.agent_details.name.toLowerCase() ===
+          searchValue.toLowerCase().trim() ||
+        item.agent_details.address.toLowerCase() ===
+          searchValue.toLowerCase().trim() ||
+        item.agent_details.city.toLowerCase() ===
+          searchValue.toLowerCase().trim() ||
+        item.agent_details.province.toLowerCase() ===
+          searchValue.toLowerCase().trim() ||
+        item.agent_details.region.toLowerCase() ===
+          searchValue.toLowerCase().trim() ||
+        item.agent_details.contact.toLowerCase() ===
+          searchValue.toLowerCase().trim() ||
+        item.status.toLowerCase() === searchValue.toLowerCase().trim()
     );
     setFilteredAgentList(filterBySearch);
     setCount(filterBySearch.length);
   };
 
-  const handleClick = (agent_number) => {
-    const data = { agentNumber: agent_number };
+  const handleClick = (agent) => {
+    const data = { agent: agent };
     navigate("/agent_view", { state: { data } });
   };
 
@@ -93,27 +102,27 @@ const AgentMasterList = () => {
     }
   };
 
-    // Calculate current items to display based on pagination
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredAgentList.slice(
-      indexOfFirstItem,
-      indexOfLastItem
-    );
-  
-    // Calculate total number of pages
-    const pageCount = Math.ceil(filteredAgentList.length / itemsPerPage);
+  // Calculate current items to display based on pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredAgentList.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  // Calculate total number of pages
+  const pageCount = Math.ceil(filteredAgentList.length / itemsPerPage);
   return (
     <Flex
-    justifyContent="flex-start"
-    height="100vh"
-    alignItems="flex-start"
-    backgroundColor={COLORS.BACKGROUND}
-    padding="50px"
-    width="calc(100vw - 200px)"
-    flexDir="column"
-    marginLeft="200px"
-  >
+      justifyContent="flex-start"
+      height="100vh"
+      alignItems="flex-start"
+      backgroundColor={COLORS.BACKGROUND}
+      padding="50px"
+      width="calc(100vw - 200px)"
+      flexDir="column"
+      marginLeft="200px"
+    >
       <FormControl>
         <form>
           <Stack direction="row" mb={5} justifyContent="space-between">
@@ -143,13 +152,19 @@ const AgentMasterList = () => {
               </Text>
             </Box>
             <Button size="sm" bg="green" color="white" mr={5}>
-              <Link to="/agent">Add Agent</Link>
+              <Link to="/agent">Add AGent</Link>
             </Button>
           </Stack>
         </form>
       </FormControl>
-      <TableContainer borderBottom="1px solid" width="100%" overflowY="scroll">
-      <Table size="sm" variant="unstyled">
+      <TableContainer
+        borderBottom="1px solid"
+        borderLeft="1px solid"
+        borderTop="1px solid"
+        width="100%"
+        overflowY="scroll"
+      >
+        <Table size="sm" variant="unstyled">
           <Thead
             position="sticky"
             top={0}
@@ -157,7 +172,7 @@ const AgentMasterList = () => {
             style={{ boxShadow: "inset 1px -1px  #c2c0f0, 1px -1px  #c2c0f0" }}
           >
             <Tr>
-            <Th fontWeight="900" w="50px" border="1px solid">
+              <Th fontWeight="900" w="50px" border="1px solid">
                 <MdCallToAction />
               </Th>
               <Th fontWeight="900" border="1px solid">
@@ -166,7 +181,7 @@ const AgentMasterList = () => {
               <Th fontWeight="900" border="1px solid">
                 NAME
               </Th>
-              <Th fontWeight="900" w='200px' border="1px solid">
+              <Th fontWeight="900" w="200px" border="1px solid">
                 ADDRESS
               </Th>
               <Th fontWeight="900" border="1px solid">
@@ -178,25 +193,29 @@ const AgentMasterList = () => {
               <Th fontWeight="900" border="1px solid">
                 REGION
               </Th>
+              <Th fontWeight="900" border="1px solid">
+                Status
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {currentItems.map((agent, index) => (
               <TableRowDisplayAgent
                 key={index}
-                agentNumber={agent.number}
-                agentName={agent.name}
-                address={agent.address}
-                city={agent.city}
-                province={agent.province}
-                region={agent.region}
-                onClick={() => handleClick(agent.number)}
+                agentNumber={agent.agent_details.number}
+                agentName={agent.agent_details.name}
+                address={agent.agent_details.address}
+                city={agent.agent_details.city}
+                province={agent.agent_details.province}
+                region={agent.agent_details.region}
+                status={agent.status}
+                onClick={() => handleClick(agent)}
               />
             ))}
           </Tbody>
         </Table>
       </TableContainer>
-      {loading? (
+      {loading ? (
         <Box
           display="flex"
           w="100%"
@@ -206,7 +225,7 @@ const AgentMasterList = () => {
         >
           <Spinner alignSelf="center" color="red" />
         </Box>
-      ): (
+      ) : (
         <Box
           display="flex"
           w="100%"
@@ -216,7 +235,7 @@ const AgentMasterList = () => {
         >
           <Spinner alignSelf="center" color="transparent" />
         </Box>
-      ) }
+      )}
       <Stack direction="row" alignItems="end" justifyContent="center">
         <Button
           bg={COLORS.ACCENT}

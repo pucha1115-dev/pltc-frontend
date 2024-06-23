@@ -35,7 +35,7 @@ const SimMasterList = () => {
 
   useEffect(() => {
     getSimList();
-  }, [currentPage]); // Fetch data when currentPage changes
+  }, []); // Fetch data when currentPage changes
 
   const getSimList = async () => {
     setLoading(true);
@@ -207,7 +207,7 @@ const SimMasterList = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      {loading && (
+      {loading ? (
         <Box
           display="flex"
           w="100%"
@@ -217,9 +217,19 @@ const SimMasterList = () => {
         >
           <Spinner alignSelf="center" color="red" />
         </Box>
+      ) : (
+        <Box
+          display="flex"
+          w="100%"
+          justifyContent="center"
+          mt="10px"
+          mb="10px"
+        >
+          <Spinner alignSelf="center" color="transparent" />
+        </Box>
       )}
 
-      <Stack direction="row" alignItems="end" justifyContent="center" mt={4}>
+      <Stack direction="row" alignItems="end" justifyContent="center">
         <Button
           bg={COLORS.ACCENT}
           size="sm"

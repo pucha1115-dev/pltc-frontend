@@ -35,7 +35,7 @@ const ModemMasterList = () => {
 
   useEffect(() => {
     getModemList();
-  }, [currentPage]);
+  }, []);
 
   const getModemList = async () => {
     setLoading(true);
@@ -191,7 +191,7 @@ const ModemMasterList = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      {loading && (
+      {loading ? (
         <Box
           display="flex"
           w="100%"
@@ -201,8 +201,18 @@ const ModemMasterList = () => {
         >
           <Spinner alignSelf="center" color="red" />
         </Box>
+      ) : (
+        <Box
+          display="flex"
+          w="100%"
+          justifyContent="center"
+          mt="10px"
+          mb="10px"
+        >
+          <Spinner alignSelf="center" color="transparent" />
+        </Box>
       )}
-      <Stack direction="row" alignItems="end" justifyContent="center" mt={4}>
+      <Stack direction="row" alignItems="end" justifyContent="center">
         <Button
           bg={COLORS.ACCENT}
           size="sm"

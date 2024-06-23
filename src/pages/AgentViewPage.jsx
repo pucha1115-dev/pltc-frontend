@@ -19,11 +19,14 @@ import TextDisplayRof from "../components/TextDisplayRof";
 const AgentViewPage = () => {
   const [agentRecord, setAgentRecord] = useState([]);
   const [disableInput, setDisableInput] = useState(false);
-
   const location = useLocation();
-  const [retrievedAgentNumber, setRetrievedAgentNumber] = useState(
-    location.state || {}
-  );
+  const retrievedAgentData = location.state.data.agent || {};
+  const [sim1, setSim1] = useState("");
+  const [sim2, setSim2] = useState("");
+
+  const sims = retrievedAgentData.sim_details;
+
+  useEffect(() => {});
 
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -54,187 +57,164 @@ const AgentViewPage = () => {
   };
 
   return (
-    <>
-      <Input
-        width="220px"
-        alignItems="center"
-        justifyContent="center"
-        size="sm"
-        border={0}
-        type="file"
-        onChange={onFileChange}
-      ></Input>
+    <Flex
+      p={0}
+      m={0}
+      backgroundColor={COLORS.BACKGROUND}
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+      width="calc(100vw - 200px)"
+      ml="200px"
+      mt={10}
+      mb={10}
+    >
+      <Container
+        padding="40px 20px 20px 20px"
+        bg={COLORS.FOREGROUND}
+        maxW={900}
+        height="100%"
+        borderRadius={10}
+      >
+        <Stack direction="row" justifyContent="center">
+          <Heading size="lg" color={COLORS.TEXT} marginBottom="20px">
+            AGENT INFORMATION
+          </Heading>
+        </Stack>
+        <Heading size="md" color={COLORS.TEXT} marginBottom="40px">
+          AGENT DETAILS:
+        </Heading>
+        <Stack direction="column" spacing={2}>
+          <TextDisplayRof
+            label="STATUS:"
+            value={retrievedAgentData.status}
+            customWidth="89px"
+            customInputWidth="200"
+            disabled={false}
+          />
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <TextDisplayRof
+              label="AGENT NO.:"
+              value={retrievedAgentData.agent_details.number}
+              customWidth="89px"
+              customInputWidth="200"
+              disabled={false}
+            />
+            <Button
+              w={20}
+              borderRadius={4}
+              height="28px"
+              backgroundColor={COLORS.TEXT}
+              fontSize="14px"
+              //onClick={handleSearch}
+            >
+              Search
+            </Button>
+          </Stack>
 
-      {loading ? (
-        <Button
-          isLoading
-          size="sm"
-          backgroundColor={COLORS.ACCENT}
-          onClick={handleUpload}
+          <TextDisplayRof
+            label="AGENT NAME:"
+            value={retrievedAgentData.agent_details.name}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="ADDRESS:"
+            value={retrievedAgentData.agent_details.address}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="CITY:"
+            value={retrievedAgentData.agent_details.city}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="PROVINCE:"
+            value={retrievedAgentData.agent_details.province}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="REGION:"
+            value={retrievedAgentData.agent_details.region}
+            disabled={disableInput}
+          />
+        </Stack>
+        <Heading
+          size="md"
+          color={COLORS.TEXT}
+          marginBottom="20px"
+          marginTop="40px"
         >
-          Upload
-        </Button>
-      ) : (
-        <Button
-          size="sm"
-          backgroundColor={COLORS.ACCENT}
-          onClick={handleUpload}
+          COMMUNICATION DETAILS:
+        </Heading>
+        <Stack direction="column" spacing={2}>
+          <HStack spacing={4}>
+            <TextDisplayRof
+              customWidth="130px"
+              label="SIM1 IP:"
+              value={retrievedAgentData.sim_details[0].ip}
+              disabled={disableInput}
+            />
+            <TextDisplayRof
+              customWidth="50px"
+              label="ICCID"
+              value={retrievedAgentData.sim_details[0].iccid}
+              disabled={disableInput}
+            />
+            <TextDisplayRof
+              customWidth="50px"
+              label="CARRIER:"
+              value={retrievedAgentData.sim_details[0].carrier}
+              disabled={disableInput}
+            />
+          </HStack>
+          <HStack spacing={4}>
+            <TextDisplayRof
+              customWidth="130px"
+              label="SIM2 IP:"
+              value={retrievedAgentData.sim_details[1].ip}
+              disabled={disableInput}
+            />
+            <TextDisplayRof
+              customWidth="50px"
+              label="ICCID:"
+              value={retrievedAgentData.sim_details[1].iccid}
+              disabled={disableInput}
+            />
+            <TextDisplayRof
+              customWidth="50px"
+              label="CARRIER:"
+              value={retrievedAgentData.sim_details[1].carrier}
+              disabled={disableInput}
+            />
+          </HStack>
+        </Stack>
+        <Heading
+          size="md"
+          color={COLORS.TEXT}
+          marginBottom="20px"
+          marginTop="40px"
         >
-          Upload
-        </Button>
-      )}
-    </>
-    // <>{agentRecord === "render" ?(console.log('no data')) : (console.log(agentRecord[0].agent_details.name))}</>
-    // <Flex
-    //   p={0}
-    //   m={0}
-    //   backgroundColor={COLORS.BACKGROUND}
-    //   justifyContent="center"
-    //   alignItems="center"
-    //   height="100vh"
-    //   width="calc(100vw - 200px)"
-    //   ml='200px'
-    //   mt={10}
-    //   mb={10}
-
-    // >
-    //   <Container
-    //     padding="40px 20px 20px 20px"
-    //     bg={COLORS.FOREGROUND}
-    //     maxW={900}
-    //     height="100%"
-    //     borderRadius={10}
-    //   >
-    //     <Stack direction="row" justifyContent="center">
-    //       <Heading size="lg" color={COLORS.TEXT} marginBottom="20px">
-    //         ROF
-    //       </Heading>
-    //     </Stack>
-    //     <Heading size="md" color={COLORS.TEXT} marginBottom="40px">
-    //       AGENT DETAILS:
-    //     </Heading>
-    //     <Stack direction="column" spacing={2}>
-    //       <Stack direction="row" alignItems="center" spacing={2}>
-    //         <TextDisplayRof
-    //           label="AGENT NO.:"
-    //           value={agentInfo[0].agent_details.number}
-    //           customWidth="89px"
-    //           customInputWidth="200"
-    //           disabled={false}
-    //           onChange={(e) => setAgentNumber(e.target.value)}
-    //         />
-    //         <Button
-    //           w={20}
-    //           borderRadius={4}
-    //           height="28px"
-    //           backgroundColor={COLORS.TEXT}
-    //           fontSize="14px"
-    //           //onClick={handleSearch}
-    //         >
-    //           Search
-    //         </Button>
-    //       </Stack>
-
-    //       <TextDisplayRof
-    //         label="AGENT NAME:"
-    //         value={agentInfo[0].agent_details.name}
-    //         disabled={disableInput}
-    //       />
-    //       <TextDisplayRof
-    //         label="ADDRESS:"
-    //         value={agentInfo[0].agent_details.adress}
-    //         disabled={disableInput}
-    //       />
-    //       <TextDisplayRof label="CITY:" value={agentInfo[0].agent_details.city} disabled={disableInput} />
-    //       <TextDisplayRof
-    //         label="PROVINCE:"
-    //         value={agentInfo[0].agent_details.province}
-    //         disabled={disableInput}
-    //       />
-    //       <TextDisplayRof
-    //         label="REGION:"
-    //         value={agentInfo[0].agent_details.region}
-    //         disabled={disableInput}
-    //       />
-    //       <TextDisplayRof label="ZIP:" value={zip} disabled={disableInput} />
-    //     </Stack>
-    //     <Heading
-    //       size="md"
-    //       color={COLORS.TEXT}
-    //       marginBottom="20px"
-    //       marginTop="40px"
-    //     >
-    //       COMMUNICATION DETAILS:
-    //     </Heading>
-    //     <Stack direction="column" spacing={2}>
-    //       <HStack spacing={4}>
-    //         <TextDisplayRof
-    //           customWidth="130px"
-    //           label="SIM1 IP:"
-    //           value={agentInfo[0].sim_details[0].ip}
-    //           disabled={disableInput}
-    //         />
-    //         <TextDisplayRof
-    //           customWidth="50px"
-    //           label="ICCID"
-    //           value={agentInfo[0].sim_details[0].iccid}
-    //           disabled={disableInput}
-    //         />
-    //         <TextDisplayRof
-    //           customWidth="50px"
-    //           label="CARRIER:"
-    //           value={agentInfo[0].sim_details[0].carrier}
-    //           disabled={disableInput}
-    //         />
-    //       </HStack>
-    //       <HStack spacing={4}>
-    //         <TextDisplayRof
-    //           customWidth="130px"
-    //           label="SIM2 IP:"
-    //           value={agentInfo[0].sim_details[1].ip}
-    //           disabled={disableInput}
-    //         />
-    //         <TextDisplayRof
-    //           customWidth="50px"
-    //           label="ICCID:"
-    //           value={agentInfo[0].sim_details[1].iccid}
-    //           disabled={disableInput}
-    //         />
-    //         <TextDisplayRof
-    //           customWidth="50px"
-    //           label="CARRIER:"
-    //           value={agentInfo[0].sim_details[1].carrier}
-    //           disabled={disableInput}
-    //         />
-    //       </HStack>
-    //     </Stack>
-    //     <Heading
-    //       size="md"
-    //       color={COLORS.TEXT}
-    //       marginBottom="20px"
-    //       marginTop="40px"
-    //     >
-    //       MODEM DETAILS:
-    //     </Heading>
-    //     <Stack direction="column" spacing={2}>
-    //       <TextDisplayRof
-    //         label="BRAND:"
-    //         value={agentInfo[0].modem_details.modem_brand}
-    //         disabled={disableInput}
-    //       />
-    //       <TextDisplayRof
-    //         label="TYPE:"
-    //         value={agentInfo[0].modem_details.modem_type}
-    //         disabled={disableInput}
-    //       />
-    //       <TextDisplayRof
-    //         label="SERIAL NO.:"
-    //         value={agentInfo[0].modem_details.modem_sn}
-    //         disabled={disableInput}
-    //       />
-    //     </Stack>
-    //   </Container>
-    // </Flex>
+          MODEM DETAILS:
+        </Heading>
+        <Stack direction="column" spacing={2}>
+          <TextDisplayRof
+            label="BRAND:"
+            value={retrievedAgentData.modem_details.modem_brand}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="TYPE:"
+            value={retrievedAgentData.modem_details.modem_type}
+            disabled={disableInput}
+          />
+          <TextDisplayRof
+            label="SERIAL NO.:"
+            value={retrievedAgentData.modem_details.modem_sn}
+            disabled={disableInput}
+          />
+        </Stack>
+      </Container>
+    </Flex>
   );
 };
 

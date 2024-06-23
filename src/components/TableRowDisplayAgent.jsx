@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Tr, Td } from "@chakra-ui/react";
-import { RiListView  } from "react-icons/ri";
+import { RiListView } from "react-icons/ri";
 
 const TableRowDisplayAgent = ({
   agentNumber,
@@ -9,7 +9,7 @@ const TableRowDisplayAgent = ({
   city,
   province,
   region,
-
+  status,
   onClick,
 }) => {
   return (
@@ -23,6 +23,7 @@ const TableRowDisplayAgent = ({
       <Td border="1px solid">{city}</Td>
       <Td border="1px solid">{province}</Td>
       <Td border="1px solid">{region}</Td>
+      <Td border="1px solid">{status}</Td>
     </Tr>
   );
 };

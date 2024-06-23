@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   Divider,
   Box,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import FormInputField from "../components/FormInputField";
 import { useState, useEffect } from "react";
@@ -27,7 +27,6 @@ const Register = () => {
   const [city, setCity] = useState("");
   const [province, setProvince] = useState("");
   const [region, setRegion] = useState("");
-  const [zip, setZip] = useState("");
 
   const [isLargerThanp425x] = useMediaQuery("(min-width: 425px)");
   const [direction, setDirection] = useState("");
@@ -76,7 +75,6 @@ const Register = () => {
     city: city.toUpperCase(),
     province: province.toUpperCase(),
     region: region,
-    zip_code: zip,
   };
 
   const handleSubmit = async () => {
@@ -96,13 +94,13 @@ const Register = () => {
 
   return (
     <Flex
-        justifyContent="center"
-        height="100vh"
-        alignItems="center"
-        width="calc(100vw - 200px)"
-        ml="200px"
-        backgroundColor={COLORS.BACKGROUND}
-      >
+      justifyContent="center"
+      height="100vh"
+      alignItems="center"
+      width="calc(100vw - 200px)"
+      ml="200px"
+      backgroundColor={COLORS.BACKGROUND}
+    >
       <Container
         maxW={600}
         bg={COLORS.FOREGROUND}
@@ -173,7 +171,7 @@ const Register = () => {
               justify="start"
               alignItems="start"
               spacing={2}
-              w='100%'
+              w="100%"
             >
               <FormInputField
                 label="CITY"
@@ -198,7 +196,6 @@ const Register = () => {
                 onChange={(e) => setRegion(e.target.value)}
                 choices={["06", "07", "08", "09", "10", "11", "12", "13", "14"]}
               />
-          
             </Stack>
             <Button
               marginTop={8}
@@ -208,21 +205,17 @@ const Register = () => {
             >
               SUBMIT
             </Button>
-            <Stack
-                alignItems="center"
-                justifyContent="center"
-                direction="row"
-              >
-                <Divider></Divider>
-                <Text>OR</Text>
-                <Divider></Divider>
-              </Stack>
-              <Box mt={5} display="flex" justifyContent="center">
-                <Text>Upload a CSV file.</Text>
-              </Box>
-              <Stack justifyContent="center" direction="row">
-                <UploadAgentCsv></UploadAgentCsv>
-              </Stack>
+            <Stack alignItems="center" justifyContent="center" direction="row">
+              <Divider></Divider>
+              <Text>OR</Text>
+              <Divider></Divider>
+            </Stack>
+            <Box mt={5} display="flex" justifyContent="center">
+              <Text>Upload a CSV file.</Text>
+            </Box>
+            <Stack justifyContent="center" direction="row">
+              <UploadAgentCsv></UploadAgentCsv>
+            </Stack>
           </Stack>
         </FormControl>
       </Container>
