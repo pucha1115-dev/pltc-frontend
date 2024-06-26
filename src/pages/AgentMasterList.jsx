@@ -61,7 +61,7 @@ const AgentMasterList = () => {
   };
 
   const filterAgentList = (list) => {
-    const filterBySearch = list.filter(
+    const filterBySearch = list.includes(
       (item) =>
         item.agent_details.number === searchValue.toLowerCase().trim() ||
         item.agent_details.name.toLowerCase() ===
@@ -151,9 +151,6 @@ const AgentMasterList = () => {
                 Records Found: {count}
               </Text>
             </Box>
-            <Button size="sm" bg="green" color="white" mr={5}>
-              <Link to="/agent">Add AGent</Link>
-            </Button>
           </Stack>
         </form>
       </FormControl>

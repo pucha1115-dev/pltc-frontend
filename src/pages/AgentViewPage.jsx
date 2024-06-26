@@ -28,29 +28,12 @@ const AgentViewPage = () => {
 
   useEffect(() => {});
 
+  const handleClick = () => {
+    pass
+  }
+
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const handleUpload = async () => {
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/agent_infos/data/upload-csv/",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      if (response.status === 201) {
-        alert("File upload successful.");
-        setLoading(false);
-      }
-    } catch (error) {
-      alert(error.message);
-      setLoading(false);
-    }
-  };
 
   const onFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -63,7 +46,7 @@ const AgentViewPage = () => {
       backgroundColor={COLORS.BACKGROUND}
       justifyContent="center"
       alignItems="center"
-      height="100vh"
+      height="900px"
       width="calc(100vw - 200px)"
       ml="200px"
       mt={10}
@@ -100,7 +83,7 @@ const AgentViewPage = () => {
               customInputWidth="200"
               disabled={false}
             />
-            <Button
+            {/* <Button
               w={20}
               borderRadius={4}
               height="28px"
@@ -109,7 +92,7 @@ const AgentViewPage = () => {
               //onClick={handleSearch}
             >
               Search
-            </Button>
+            </Button> */}
           </Stack>
 
           <TextDisplayRof
@@ -153,11 +136,18 @@ const AgentViewPage = () => {
               label="SIM1 IP:"
               value={retrievedAgentData.sim_details[0].ip}
               disabled={disableInput}
+              
             />
             <TextDisplayRof
               customWidth="50px"
               label="ICCID"
               value={retrievedAgentData.sim_details[0].iccid}
+              disabled={disableInput}
+            />
+            <TextDisplayRof
+              customWidth="50px"
+              label="MIN/HP:"
+              value={retrievedAgentData.sim_details[0].min_hp_number}
               disabled={disableInput}
             />
             <TextDisplayRof
@@ -178,6 +168,12 @@ const AgentViewPage = () => {
               customWidth="50px"
               label="ICCID:"
               value={retrievedAgentData.sim_details[1].iccid}
+              disabled={disableInput}
+            />
+            <TextDisplayRof
+              customWidth="50px"
+              label="MIN/HP:"
+              value={retrievedAgentData.sim_details[0].min_hp_number}
               disabled={disableInput}
             />
             <TextDisplayRof
