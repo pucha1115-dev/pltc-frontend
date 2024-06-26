@@ -25,7 +25,7 @@ import { MdCallToAction } from "react-icons/md";
 
 const AgentMasterList = () => {
   const [agentList, setAgentList] = useState([]);
-  const [filteredAgentList, setFilteredAgentList] = useState(agentList);
+  const [filteredAgentList, setFilteredAgentList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,38 +48,32 @@ const AgentMasterList = () => {
         setAgentList(data);
         if (searchValue !== "") {
           filterAgentList(data);
-          setLoading(false);
         } else {
           setFilteredAgentList(data);
           setCount(data.length);
-          setLoading(false);
         }
       }
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const filterAgentList = (list) => {
-    const filterBySearch = list.includes(
+    const filteredList = list.filter(
       (item) =>
-        item.agent_details.number === searchValue.toLowerCase().trim() ||
-        item.agent_details.name.toLowerCase() ===
-          searchValue.toLowerCase().trim() ||
-        item.agent_details.address.toLowerCase() ===
-          searchValue.toLowerCase().trim() ||
-        item.agent_details.city.toLowerCase() ===
-          searchValue.toLowerCase().trim() ||
-        item.agent_details.province.toLowerCase() ===
-          searchValue.toLowerCase().trim() ||
-        item.agent_details.region.toLowerCase() ===
-          searchValue.toLowerCase().trim() ||
-        item.agent_details.contact.toLowerCase() ===
-          searchValue.toLowerCase().trim() ||
-        item.status.toLowerCase() === searchValue.toLowerCase().trim()
+        item.agent_details.number.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.name.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.address.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.city.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.province.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.region.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.contact.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.status.toLowerCase().includes(searchValue.toLowerCase().trim())
     );
-    setFilteredAgentList(filterBySearch);
-    setCount(filterBySearch.length);
+    setFilteredAgentList(filteredList);
+    setCount(filteredList.length);
   };
 
   const handleClick = (agent) => {
@@ -90,6 +84,14 @@ const AgentMasterList = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber); // Update currentPage when page is changed
   };
+
+  // Calculate current items to display based on pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredAgentList.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Calculate total number of pages
+  const pageCount = Math.ceil(filteredAgentList.length / itemsPerPage);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -102,16 +104,6 @@ const AgentMasterList = () => {
     }
   };
 
-  // Calculate current items to display based on pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredAgentList.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  // Calculate total number of pages
-  const pageCount = Math.ceil(filteredAgentList.length / itemsPerPage);
   return (
     <Flex
       justifyContent="flex-start"
@@ -124,7 +116,7 @@ const AgentMasterList = () => {
       marginLeft="200px"
     >
       <FormControl>
-        <form>
+        <form onSubmit={handleSearch}>
           <Stack direction="row" mb={5} justifyContent="space-between">
             <Box display="flex" justifyContent="center">
               <Input
@@ -143,7 +135,6 @@ const AgentMasterList = () => {
                 size="sm"
                 width="100px"
                 backgroundColor={COLORS.TEXT}
-                onClick={handleSearch}
               >
                 Search
               </Button>
