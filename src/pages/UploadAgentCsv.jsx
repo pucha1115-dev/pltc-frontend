@@ -1,15 +1,13 @@
 import { Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import {COLORS} from '../constants'
-import { useSubmit } from "react-router-dom";
+import { COLORS } from "../constants";
 
 const UploadAgentCsv = () => {
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleUpload = async () => {
-
     setLoading(true);
 
     const formData = new FormData();
@@ -36,26 +34,24 @@ const UploadAgentCsv = () => {
 
   return (
     <>
-      <Input 
-      width='220px' 
-      alignItems='center' 
-      justifyContent='center' 
-      size='sm' 
-      border={0} 
-      type="file" 
-      onChange={onFileChange}>
-        
-      </Input>
+      <Input
+        width="220px"
+        alignItems="center"
+        justifyContent="center"
+        size="sm"
+        border={0}
+        type="file"
+        onChange={onFileChange}
+      ></Input>
 
       <Button
-          size="sm"
-          isLoading={loading}
-          backgroundColor={COLORS.ACCENT}
-          onClick={handleUpload}
-        >
-          Upload
-        </Button>
-      
+        size="sm"
+        isLoading={loading}
+        backgroundColor={COLORS.ACCENT}
+        onClick={handleUpload}
+      >
+        Upload
+      </Button>
     </>
   );
 };

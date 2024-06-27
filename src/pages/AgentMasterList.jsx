@@ -25,32 +25,42 @@ import { MdCallToAction } from "react-icons/md";
 
 const AgentMasterList = () => {
   const [agentList, setAgentList] = useState([]);
-  const [filteredAgentList, setFilteredAgentList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [count, setCount] = useState(0);
+  const [pageCount, SetPageCount] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20); // Adjust items per page as needed
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [previousPage, setPreviousPage] = useState("");
+  const [nextPage, setNextPage] = useState("");
+  const [apiEndPoint, setApiEndPoint] = useState(
+    "http://localhost:8000/api/agent-infos/"
+  );
 
   useEffect(() => {
     getAgentList();
-  }, []);
+  }, [apiEndPoint]);
 
   const getAgentList = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/agent-infos/"
-      );
+      const response = await axios.get(apiEndPoint);
       if (response.status === 200) {
-        const data = response.data;
-        setAgentList(data);
+        setAgentList(response.data.results);
+        setPreviousPage(response.data.previousPage);
+        setNextPage(response.data.nextPage);
+        SetPageCount(Math.ceil(response.data.count / 20)); // Corrected to Math.ceil to get the correct page count
+        console.log(response.data.next);
+        console.log(apiEndPoint);
+        console.log(response.data.previous);
+
+        console.log(nextPage);
+        console.log(previousPage);
+
         if (searchValue !== "") {
-          filterAgentList(data);
+          filterAgentList(response.data);
         } else {
-          setFilteredAgentList(data);
-          setCount(data.length);
+          setCount(response.count);
         }
       }
     } catch (error) {
@@ -63,16 +73,29 @@ const AgentMasterList = () => {
   const filterAgentList = (list) => {
     const filteredList = list.filter(
       (item) =>
-        item.agent_details.number.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.name.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.address.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.city.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.province.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.region.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.contact.toLowerCase().includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.number
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.name
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.address
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.city
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.province
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.region
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
+        item.agent_details.contact
+          .toLowerCase()
+          .includes(searchValue.toLowerCase().trim()) ||
         item.status.toLowerCase().includes(searchValue.toLowerCase().trim())
     );
-    setFilteredAgentList(filteredList);
     setCount(filteredList.length);
   };
 
@@ -81,27 +104,18 @@ const AgentMasterList = () => {
     navigate("/agent_view", { state: { data } });
   };
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber); // Update currentPage when page is changed
-  };
-
-  // Calculate current items to display based on pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredAgentList.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Calculate total number of pages
-  const pageCount = Math.ceil(filteredAgentList.length / itemsPerPage);
-
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(1);
     if (searchValue === "") {
-      setFilteredAgentList(agentList);
       setCount(agentList.length);
     } else {
       filterAgentList(agentList);
     }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber); // Update currentPage when page is changed
+    setApiEndPoint(`http://localhost:8000/api/agent-infos/?page=${pageNumber}`);
   };
 
   return (
@@ -187,7 +201,7 @@ const AgentMasterList = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {currentItems.map((agent, index) => (
+            {agentList.map((agent, index) => (
               <TableRowDisplayAgent
                 key={index}
                 agentNumber={agent.agent_details.number}
@@ -229,13 +243,18 @@ const AgentMasterList = () => {
           bg={COLORS.ACCENT}
           size="sm"
           onClick={() => handlePageChange(currentPage - 1)}
-          isDisabled={currentPage === 1}
+          isDisabled={currentPage === 1 || currentPage === 0}
         >
           Previous
         </Button>
         <Select
           value={currentPage}
-          onChange={(e) => handlePageChange(parseInt(e.target.value))}
+          onChange={(e) =>
+            handlePageChange(
+              parseInt(e.target.value),
+              `http://localhost:8000/api/agent-infos/?page=${e.target.value}`
+            )
+          }
           size="sm"
           width="80px"
           bg="white"
@@ -252,7 +271,7 @@ const AgentMasterList = () => {
           bg={COLORS.ACCENT}
           size="sm"
           onClick={() => handlePageChange(currentPage + 1)}
-          isDisabled={currentPage === pageCount || currentPage === 0}
+          isDisabled={currentPage === parseInt(pageCount) || currentPage === 0}
         >
           Next
         </Button>
