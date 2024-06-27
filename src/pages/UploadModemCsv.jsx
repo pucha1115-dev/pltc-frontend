@@ -47,11 +47,14 @@ const UploadModemCsv = () => {
         
       </Input>
 
-      {loading?
-      <Button isLoading size='sm' backgroundColor={COLORS.ACCENT}  onClick={handleUpload}>Upload</Button> 
-      :
-      <Button size='sm' backgroundColor={COLORS.ACCENT}  onClick={handleUpload}>Upload</Button>
-      }
+      <Button
+          size="sm"
+          isLoading={loading}
+          backgroundColor={COLORS.ACCENT}
+          onClick={handleUpload}
+        >
+          Upload
+        </Button>
       
     </>
   );

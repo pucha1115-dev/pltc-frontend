@@ -51,24 +51,15 @@ const UploadSimCsv = () => {
         onChange={onFileChange}
       ></Input>
 
-      {loading ? (
+    
         <Button
           size="sm"
-          isLoading
+          isLoading={loading}
           backgroundColor={COLORS.ACCENT}
           onClick={handleUpload}
         >
           Upload
         </Button>
-      ) : (
-        <Button
-          size="sm"
-          backgroundColor={COLORS.ACCENT}
-          onClick={handleUpload}
-        >
-          Upload
-        </Button>
-      )}
     </>
   );
 };
