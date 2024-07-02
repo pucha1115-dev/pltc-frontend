@@ -34,7 +34,7 @@ const AgentMasterList = () => {
   const [previousPage, setPreviousPage] = useState("");
   const [nextPage, setNextPage] = useState("");
   const [apiEndPoint, setApiEndPoint] = useState(
-    "http://localhost:8000/api/agent-infos/"
+    "http://localhost:8000/api/agent-infos/?search="
   );
 
   useEffect(() => {
@@ -47,21 +47,10 @@ const AgentMasterList = () => {
       const response = await axios.get(apiEndPoint);
       if (response.status === 200) {
         setAgentList(response.data.results);
-        setPreviousPage(response.data.previousPage);
-        setNextPage(response.data.nextPage);
+        setPreviousPage(response.data.previous);
+        setNextPage(response.data.next);
         SetPageCount(Math.ceil(response.data.count / 20)); // Corrected to Math.ceil to get the correct page count
-        console.log(response.data.next);
-        console.log(apiEndPoint);
-        console.log(response.data.previous);
-
-        console.log(nextPage);
-        console.log(previousPage);
-
-        if (searchValue !== "") {
-          filterAgentList(response.data);
-        } else {
-          setCount(response.count);
-        }
+        setCount(response.data.count)
       }
     } catch (error) {
       alert(error.message);
@@ -70,52 +59,47 @@ const AgentMasterList = () => {
     }
   };
 
-  const filterAgentList = (list) => {
-    const filteredList = list.filter(
-      (item) =>
-        item.agent_details.number
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.name
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.address
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.city
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.province
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.region
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.agent_details.contact
-          .toLowerCase()
-          .includes(searchValue.toLowerCase().trim()) ||
-        item.status.toLowerCase().includes(searchValue.toLowerCase().trim())
-    );
-    setCount(filteredList.length);
-  };
 
   const handleClick = (agent) => {
     const data = { agent: agent };
     navigate("/agent_view", { state: { data } });
   };
 
+  const searchAgent = async (data) => {
+    try{ 
+      const response = await axios.get(`http://localhost:8000/api/agent-infos/?search=${data}`);
+      setAgentList(response.data.results);
+      setPreviousPage(response.data.previous);
+      setNextPage(response.data.next);
+      SetPageCount(Math.ceil(response.data.count / 20)); // Corrected to Math.ceil to get the correct page count
+      setCount(response.data.count)
+    
+    } 
+      catch(error){
+        alert(error.message)
+      }
+
+
+  }
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchValue === "") {
-      setCount(agentList.length);
+      getAgentList();
     } else {
-      filterAgentList(agentList);
+      searchAgent(searchValue);
     }
   };
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber); // Update currentPage when page is changed
-    setApiEndPoint(`http://localhost:8000/api/agent-infos/?page=${pageNumber}`);
+  const handlePageChange = (page) => {
+    let pageNumber
+    if(!page){
+      pageNumber = 1
+    } else {
+      pageNumber = page.match(/page=(\d+)/)[1];
+    }
+    setCurrentPage(pageNumber);
+    setApiEndPoint(page);
   };
 
   return (
@@ -242,8 +226,8 @@ const AgentMasterList = () => {
         <Button
           bg={COLORS.ACCENT}
           size="sm"
-          onClick={() => handlePageChange(currentPage - 1)}
-          isDisabled={currentPage === 1 || currentPage === 0}
+          onClick={() => handlePageChange(previousPage)}
+          isDisabled={parseInt(currentPage) === 1 || parseInt(currentPage) === 0}
         >
           Previous
         </Button>
@@ -270,8 +254,8 @@ const AgentMasterList = () => {
         <Button
           bg={COLORS.ACCENT}
           size="sm"
-          onClick={() => handlePageChange(currentPage + 1)}
-          isDisabled={currentPage === parseInt(pageCount) || currentPage === 0}
+          onClick={() => handlePageChange(nextPage)}
+          isDisabled={parseInt(currentPage) === parseInt(pageCount) || parseInt(currentPage) === 0}
         >
           Next
         </Button>
